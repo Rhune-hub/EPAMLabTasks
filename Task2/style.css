@@ -1,0 +1,31 @@
+body {
+    background-color:blanchedalmond;
+}
+.table-container {
+    display: grid;
+    place-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: larger;
+    font-weight: bolder;
+    font-family: sans-serif;
+}
+table, td, th {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+table {
+    background-color: beige;
+    text-align: center;
+}
+td {
+    padding: 4px 10px;
+}
+thead {
+    background-color:darksalmon;
+}
+table caption {
+    padding: 5px;
+    font-size: 1.25em;
+}
