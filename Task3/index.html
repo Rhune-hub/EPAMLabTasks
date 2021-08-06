@@ -12,23 +12,15 @@
         <h1>Objects Interaction</h1>
     </header>
     <div class="description">
-        <p>Input to textarea objects in JSON format to have a meal and not to be a really hungry.</p>
+        <p>Input to textarea objects in JSON format and click ADD (for add objects) 
+            or INTERSECT (for intersect objects) button to get result of the action.</p>
     </div>
     <section class="form-container">
         <form id="objects-interaction-form" class='custom-form'>
-            <fieldset id="objects-fieldset">
-                <div class="form-row">    
-                    <label for="object-1">Object 1</label>
-                    <textarea class="object-field" name="objects-set" id="object-1"></textarea>
-                </div>
-                <div class="form-row">
-                    <label for="object-2">Object 2</label>
-                    <textarea class="object-field" name="objects-set" id="object-2"></textarea>
-                </div>
-            </fieldset>
+            <fieldset id="objects-fieldset"></fieldset>
                 <div class="form-row">
                     <input type="button" class="form-button" id="add-objects" value="ADD" >
-                    <!-- <input type="button" class="form-button" value="INTERSECT"> -->
+                    <input type="button" class="form-button" id="intersect-objects" value="INTERSECT">
                 </div>
             <div class="form-row">
                 <label for="result-object">Resulted object</label>
