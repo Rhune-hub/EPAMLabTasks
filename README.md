@@ -17,13 +17,14 @@ Repository for EPAM Laboratory Tasks
 1) Create repo “add”​
 
 2) Implement function that can “add” objects​
-
 example: 
 ```javascript
 a = {x: 1} b = {x: 2, y: 2} ​
 add(a, b) returns {x: 3, y: 2}​
 add(a, b, a) returns {x: 4, y: 2}
 ```
+3) Create additional function that can intersect object​
+
 # EPAMLabTask 4
 
 ```javascript
