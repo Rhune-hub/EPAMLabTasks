@@ -128,10 +128,10 @@ function addObjectBlock(number) {
 
 function textareaHandler(event) {
     const currentTextarea = event.currentTarget;
-    const textareas = document.getElementsByName('objects-set');
+    const textareas = objectsSet;
     const lastTextarea = textareas[textareas.length - 1]; 
-    const currentNumber = +(currentTextarea.id.split('-')[1]);
-    const lastNumber = +(lastTextarea.id.split('-')[1]);
+    const currentNumber = Number(currentTextarea.id.split('-')[1]);
+    const lastNumber = Number(lastTextarea.id.split('-')[1]);
     const lastObject = parseJSON(lastTextarea.value);
 
     if (lastObject)
