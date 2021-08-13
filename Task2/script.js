@@ -1,5 +1,3 @@
-'use strict';
-
 const typesCoercionList = [
     "false+true",
     "'20' + 2 + 1",
@@ -33,9 +31,9 @@ const tableHeaders = [
     'RESULT',
 ];
 
-main();
+init();
 
-function main() {
+function init() {
     
     const tableContent = typesCoercionList.map(ex => {
         const result = new Function('return '+ex)();
