@@ -1,0 +1,48 @@
+body {
+    background-color:blanchedalmond;
+    font-size: 1.2em;
+    font-family: sans-serif;
+}
+.wrapper {
+    width: 70%;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+}
+
+.table-container {
+    margin: 0 auto;
+    padding: 10px;
+    font-size: larger;
+    font-weight: bolder;
+}
+table, td, th {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+table {
+    background-color: beige;
+    text-align: center;
+}
+td, th {
+    padding: 5px 15px;
+}
+thead {
+    background-color:darksalmon;
+}
+table caption {
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+.slider-container {
+    text-align: center;
+    font-weight: bold;
+}
+.slider-labels {
+    display:flex;
+    justify-content: space-between;
+}
+.slider{
+    width: 100%;
+}
