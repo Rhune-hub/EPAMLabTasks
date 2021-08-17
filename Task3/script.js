@@ -9,6 +9,7 @@ const secondObjectExample = {
 };
 
 const resultTextarea = document.getElementById('result-object');
+const objectsBlock = document.getElementById('objects-fieldset');
 const objectsSet = document.getElementsByClassName('objects-set');
 
 init();
@@ -120,9 +121,7 @@ function addObjectBlock(number) {
     container.appendChild(label);
     container.appendChild(textarea);
 
-    const fieldset = document.getElementById('objects-fieldset');
-    fieldset.appendChild(container);
-                        
+    objectsBlock.appendChild(container);                  
 }
 
 function textareaHandler(event) {
