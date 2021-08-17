@@ -9,7 +9,7 @@ const secondObjectExample = {
 };
 
 const resultTextarea = document.getElementById('result-object');
-const objectsSet = document.getElementsByName('objects-set');
+const objectsSet = document.getElementsByClassName('objects-set');
 
 init();
 
@@ -113,8 +113,7 @@ function addObjectBlock(number) {
     label.htmlFor = `object-${number}`;
 
     const textarea = document.createElement('textarea');
-    textarea.classList.add('object-field');
-    textarea.name = 'objects-set';
+    textarea.classList.add('object-field', 'objects-set');
     textarea.id = `object-${number}`;
     textarea.addEventListener('input',textareaHandler);
 
