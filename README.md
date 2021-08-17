@@ -56,6 +56,4 @@ Example of object:
 
 3)* For performance reason add memoization mechanism​
 
-4) Push code to repo “Sum of Row”​
-
-​
+4) Push code to repo “Sum of Row”​​
