@@ -1,0 +1,123 @@
+body {
+    background-color: antiquewhite;
+    font-family: sans-serif;
+    height: 90vh;
+    display: grid;
+    place-items: center;
+}
+
+main {
+    width: 80%;
+    min-width: 40rem;
+    box-shadow: 0px 0px 25px 25px bisque;
+    border-radius: 1rem;
+}
+
+p {
+    margin: 0.25rem 1rem;
+}
+
+.form {
+    display: grid;
+    place-items: center;
+}
+
+.form-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.form-block {
+    display: grid;
+    place-items: center;
+}
+
+.attention-block:before {
+    content: "!";
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+    line-height: 1rem;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.attention-block {
+    display: block;
+    margin: 1rem;
+    padding: 0.8rem;
+    border: 2px solid black;
+    border-radius: 3rem;
+    font-size: 1.25rem;
+    color: darkred;
+    background-color:lightgoldenrodyellow;
+    transition: visibility 0s linear 0s, opacity 300ms;
+}
+
+.hidden{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 300ms, opacity 500ms;
+}
+
+.number-text {
+    border-radius: 3rem;
+    text-align: center;
+    margin: 0.25rem;
+    padding: 0.8rem;
+    font-size: 2rem;
+    background-color: beige;
+    border: 3px solid black;
+}
+
+.faq-point {
+    display: inline-block;
+    font-family: sans-serif;
+    font-weight: 900;
+    text-align: center;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2.5rem;
+    line-height: 3rem;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    color:cornflowerblue;
+    background: whitesmoke;
+    border: 3px solid cornflowerblue;
+}
+
+.faq-point:hover {
+    border-color: whitesmoke;
+    color: whitesmoke;
+    background-color: cornflowerblue;
+}
+
+.faq {
+    width: 80%;
+    background-color:lavenderblush;
+    margin: 1rem;
+    padding: 0.2rem 1.2rem;
+    border: 3px solid black;
+    border-radius: 3rem;
+    text-align: center;
+    font-size: 1.2rem;
+    transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.input-number {
+    width: 14rem;
+}
+
+.input-number:focus {
+    outline: none;
+}
+
+.output-number {
+    background-color: beige;
+    min-width: 8rem;
+    max-width: 20rem;
+}
