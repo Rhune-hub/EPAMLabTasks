@@ -1,13 +1,25 @@
-
 const faq = document.getElementById('page-faq');
 const faqButton = document.getElementById('faq-button');
 
 const max = document.getElementById('max-value');
 const min = document.getElementById('min-value');
 const result = document.getElementById('result-value');
-const attentions = [...document.getElementsByClassName('attention-block')];
+const errors = [...document.getElementsByClassName('error-block')];
+const [minError, maxError, resultError] = errors;
 
 const INCORRECT_RESULT = '-';
+const errorMessage = {
+    NAN: 'The value is not a number.',
+    LESS_THAN_MIN_SAFE: 'The value is less than min safe integer.',
+    GREATER_THAN_MAX_SAFE: 'The value is less than max safe integer.',
+    UNSAFE_INT: 'The value is unsafe integer.',
+    MIN_GREATER_THAN_MAX: 'The min value is greater than the max value.',
+    MAX_LESS_THAN_MIN: 'The max value is less than the min value.',
+    MIN_VALUE_ERROR: 'The min value is incorrect.',
+    MAX_VALUE_ERROR: 'The max value is incorrect.',
+    EMPTY: 'The value is empty.',
+
+};
 
 const range = (min, max) => (min + max) / 2 * (max - min + 1);
 const rangeMemoize = memoize(range);
@@ -18,10 +30,10 @@ function init() {
     faqButton.addEventListener('mouseover', faqOverHandler);
     faqButton.addEventListener('mouseout', faqOutHandler);
 
-    max.addEventListener('input', maxInputHandler);
-    min.addEventListener('input', minInputHandler);
-    min.addEventListener('input',resultHandler);
-    max.addEventListener('input',resultHandler);
+    min.addEventListener('keydown', keyHadler);
+    max.addEventListener('keydown', keyHadler);
+    min.addEventListener('input', resultHandler);
+    max.addEventListener('input', resultHandler);
 
     const defaultMin = 1;
     const defaultMax = 10;
@@ -31,21 +43,27 @@ function init() {
 
 function memoize(func) {
     const memory = {};
-    return ((f) => 
-        (...key) => { 
+    return ((f) =>
+        (...key) => {
             if (key in memory) {
                 const value = memory[key];
                 console.log(`Get from memory: [${key}] : ${value}`);
                 return value;
             }
-            
-            const result = func(...key);
+
+            const result = f(...key);
             memory[key] = result;
             return result;
         }
     )(func);
 }
 
+function keyHadler(event) {
+    const ignoredList = ['.', ',', 'e', 'E', 'Enter'];
+    const isMinusAndNonEmpty = event.key === '-' && this.value.length;
+    if (ignoredList.includes(event.key) || isMinusAndNonEmpty)
+        event.preventDefault();
+}
 function faqOverHandler() {
     faq.classList.remove('hidden');
 }
@@ -66,68 +84,107 @@ function setDefaultState(defaultMin, defaultMax) {
     result.value = rangeMemoize(defaultMin, defaultMax);
 }
 
-function isCorrectInput() {
-    const minValue = min.value;
-    const maxValue = max.value;
+function validateInt(value) {
+    const errors = {};
 
-    const isAnyNaN = minValue === '' || maxValue === '';
+    if (isNaN(value))
+        errors.NaN = errorMessage.NAN;
+    else {
+        console.log(value);
+        if (value === '')
+            errors.empty = errorMessage.EMPTY;
 
-    console.log(isAnyNaN)
-    return !isAnyNaN && Number(minValue) < Number(maxValue);
+        if (value < Number.MIN_SAFE_INTEGER)
+            errors.lessThanMinSafe = errorMessage.LESS_THAN_MIN_SAFE;
+
+        if (value > Number.MAX_SAFE_INTEGER)
+            errors.greaterThanMaxSafe = errorMessage.GREATER_THAN_MAX_SAFE;
+    }
+
+    return errors;
+}
+
+function getCorrectResult(func, validator, errorElement=null, ...inputValues) {
+    const errors = validator(...inputValues);
+    const errorMessages = Object.values(errors);
+
+    if (errorElement)
+        errorHandler(errorElement, errorMessages);
+    
+    let correctValue = null;
+
+    if (!errorMessages.length)
+        correctValue = func(...inputValues);
+
+    return correctValue;    
+}
+
+function errorHandler(errorElement, errorMessages) {
+    if (errorMessages.length) {
+        const errorString = errorMessages.join('<br>');
+        showError(errorElement, errorString);
+    } else
+        hideError(errorElement);
+}
+
+function validateMinMax(min, max) {
+    const errors = {};
+
+    const isMinInt = Number.isInteger(min);
+    const isMaxInt = Number.isInteger(max);
+    const isMinMaxInt = isMaxInt && isMinInt;
+
+    if (!isMinInt)
+        errors.minValue = errorMessage.MIN_VALUE_ERROR;
+
+    if (!isMaxInt)
+        errors.maxValue = errorMessage.MAX_VALUE_ERROR;
+
+    if (isMinMaxInt && min > max)
+        errors.maxLessThanMin = errorMessage.MAX_LESS_THAN_MIN;
+
+    if (isMinMaxInt && !Number.isSafeInteger(range(min,max)))
+        errors.unsafeInt = errorMessage.UNSAFE_INT;
+
+    return errors;
 }
 
 function resultHandler() {
-    const isCorrect = isCorrectInput();
+    const correctMin = getCorrectResult(
+        parseInt,
+        validateInt,
+        minError,
+        min.value
+    );
 
-    if (isCorrect) {
-        const minValue = Number(min.value);
-        const maxValue = Number(max.value);
-        const resultValue = rangeMemoize(minValue,maxValue);
-        if (resultValue < Number.MAX_SAFE_INTEGER) {
-            hideAttention(result);
-            result.value = resultValue;
-            return;
-        } else 
-            showAttention(result);
-    }
-
-    result.value = INCORRECT_RESULT;
-}
-
-function minInputHandler() {
-    hideAttention(this);
-    hideAttention(max);
-
-    if (this.value === '') {
-        max.min = Number.MIN_SAFE_INTEGER;
-        return;
-    } else 
-        max.min = Number(min.value) + 1;
+    const correctMax = getCorrectResult(
+        parseInt,
+        validateInt,
+        maxError,
+        max.value
+    );
     
-    const currentMax = Number(this.max) || Number(this.value);
-    if (Number(this.value) > currentMax)
-        showAttention(this);
+    min.max = correctMax - 1;
+    max.min = correctMin + 1;
+
+    const correctResult = getCorrectResult(
+        rangeMemoize,
+        validateMinMax,
+        resultError,
+        correctMin, correctMax
+    );
+    
+    if (correctResult === null)
+        result.value = INCORRECT_RESULT;
+    else
+        result.value = correctResult;
 }
 
-function maxInputHandler() {
-    hideAttention(this);
-    hideAttention(min);
-
-    if (this.value === '') {
-        min.max = Number.MAX_SAFE_INTEGER;
-        return;
-    } else
-        min.max = Number(max.value) - 1;
-     
-    const currentMin = Number(this.min) || Number(this.value);
-    if (Number(this.value) < currentMin)
-        showAttention(this);
+function showError(errorBox, errorMessage) {
+    errorBox.innerHTML = errorMessage;
+    errorBox.classList.remove('hidden');
 }
 
-function showAttention(element) {
-    element.nextElementSibling.classList.remove('hidden');
-}
-
-function hideAttention(element) {
-    element.nextElementSibling.classList.add('hidden');
+function hideError(errorBox) {
+    errorBox.classList.add('hidden');
 }
