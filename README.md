@@ -58,6 +58,20 @@ Example of object:
 
 4) Push code to repo “Sum of Row”
 
+# EPAMLabTask 6
+
+1) Implement program to print all permutations of a given string​
+
+Example:
+```javascript
+Input: ABC​
+
+Output: ABC, ACB, BAC, BCA, CAB, CBA​
+```
+2)* Print all permutations in sorted (lexicographic) order​
+
+3) Push code to repo “momentoMemory”
+
 # EPAMLabTask 7
 
 1) Describe base class Entity that can store name​
