@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sweet Sugar</title>
+</head>
+<body>
+    <header>
+        <h1>User-Boxes-Staff</h1>
+    </header>
+    <main>
+        <h2>Select options and create/delete objects.</h2>
+        <section class="objects-constructor">
+            <section class="object-container">
+                <form class="object-form" id="user-form">
+                    <input type="text" class="input-text" id="user-name" name="users">
+                    <input type="button" value="Add" class="add-button" id="add-user-button">
+                    <input type="button" value="Remove" class="remove-button" id="remove-user-button">
+                    <hr>
+                    <div class="object-list-container" id="users-container"></div>
+                </form>
+            </section>
+            <section class="object-container">
+                <form class="object-form" id="box-form">
+                    <input type="text" class="input-text" id="box-name" name="boxes">
+                    <input type="hidden" id="selected-user-name">
+                    <input type="button" value="Add" class="add-button" id="add-box-button">
+                    <input type="button" value="Remove" class="remove-button" id="remove-box-button">
+                    <hr>
+                    <div class="object-list-container" id="boxes-container"></div>
+                </form>
+            </section>
+            <section class="object-container">
+                <form class="object-form" id="staff-form">
+                    <input type="text" class="input-text" id="staff-name" name="staff">
+                    <input type="hidden" id="selected-box-name">
+                    <input type="button" value="Add" class="add-button" id="add-staff-button">
+                    <input type="button" value="Remove" class="remove-button" id="remove-staff-button">
+                    <hr>
+                    <div class="object-list-container" id="staff-container"></div>
+                </form>
+            </section>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

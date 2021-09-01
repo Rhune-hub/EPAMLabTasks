@@ -1,0 +1,16 @@
+body {
+    background-color:blanchedalmond;
+}
+
+.object-list-element {
+    display: block;
+    padding: 20px;
+    margin: 10px;
+}
+
+.element-list-label {
+    display: block;
+}
+.object-list-element:checked + .element-list-label {
+    border-radius: 3px solid black;
+}
