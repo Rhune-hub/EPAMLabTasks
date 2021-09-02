@@ -11,10 +11,11 @@ class Staff extends Entity {
 }
 
 class Box extends Entity {
-    constructor(name, owner) {
+    constructor(name, owner, color) {
         super(name);
         this.owner = owner;
         this.staff = [];
+        this.color = color;
     }
 }
 
@@ -63,7 +64,6 @@ function init() {
     boxNameInput.value = 'ExampleBox';
     staffNameInput.value = 'ExampleStaff';
 
-
     addUser();
     addBox();
     addStaff();
@@ -72,9 +72,9 @@ function init() {
     addBoxButton.addEventListener('click', addBox);
     addStaffButton.addEventListener('click', addStaff);
 
-    removeUserButton.addEventListener('click', removeUser);
-    removeBoxButton.addEventListener('click', removeBox);
-    removeStaffButton.addEventListener('click', removeStaff);
+    removeUserButton.addEventListener('click', removeObject);
+    removeBoxButton.addEventListener('click', removeObject);
+    removeStaffButton.addEventListener('click', removeObject);
 }
 
 function addUser() {
@@ -85,17 +85,16 @@ function addUser() {
     if (userName && isUserExist)
         generateError(userError, error.USER_ALREADY_EXIST);
     else {
-
         const color = getRandomColor();
         const user = createObject(User, userName, color);
 
         users.push(user);
 
-        const userContainer = createObjectContainer('users', user, user);
-        userContainer.addEventListener('change', function () { selectedUser.value = this.value; });
+        const userContainer = createObjectContainer('user', user.name, user.color);
+        userContainer.addEventListener('click', objectClickHandler);
         usersContainer.appendChild(userContainer);
 
-        userForm.users.value = userName;
+        selectObjectContainer('user', userContainer);
         userNameInput.value = `User${users.length}`;
     }
 }
@@ -106,30 +105,42 @@ function createObject(classObject, ...params) {
     return newObject;
 }
 
-function createObjectContainer(name, object, user) {
-    const container = document.createElement('input');
-    container.type = 'radio';
+function createObjectContainer(type, textContent, bgColor='white', color='black') {
+    const container = document.createElement('div');
     container.classList.add('object-list-element');
-    container.name = name;
-    container.id =  name + '-' + object.name.toLowerCase();
+    container.textContent = textContent;
+    container.setAttribute('data-type', type);
+    container.style.backgroundColor = bgColor;
+    container.style.color = color;
 
-    const label = document.createElement('label');
-    label.htmlFor = name + '-' + object.name.toLowerCase()
-    label.textContent = object.name;
-    label.classList.add('element-list-label');
-    label.style.backgroundColor = user.color;
+    return container;
+}
 
-    container.value = object.name;
+function getObjectList(type) {
+    let list = [];
+    switch(type) {
+        case 'user': list = users; break;
+        case 'box': list = boxes; break;
+        case 'staff': list = staffs; break;
+    }
+    return list;
+}
 
-    label.appendChild(container);
-    return label;
+function getObjectContainerList(type) {
+    let list = [];
+    switch(type) {
+        case 'user': list = usersContainer; break;
+        case 'box': list = boxesContainer; break;
+        case 'staff': list = staffsContainer; break;
+    }
+    return list;
 }
 
 function removeUser() {
     const selectedUserName = userForm.users.value;
     users = users.filter(u => u.name !== selectedUserName);
 
-    const selectedUserContainer = [...userForm.users].filter(u => u.vlaue === selectedUserName);
+    const selectedUserContainer = [...userForm.users].filter(u => u.vlaue == selectedUserName);
     console.log(selectedUserContainer)
     usersContainer.removeChild(selectedUserContainer.parentNode);
 }
@@ -138,30 +149,50 @@ function addBox() {
     const boxName = boxNameInput.value.trim();
 
     const isBoxExist = boxes.includes(b => b.name === boxName);
-
-    if (boxName && isBoxExist)
+    if (!boxName || isBoxExist)
         generateError(boxError, error.BOX_ALREADY_EXIST);
     else {
-        const currentUser = users.filter(u => u.name === userForm.users.value);
-        const box = createObject(Box, boxName, currentUser);
+        const selectedUser = document.querySelector('.selected[data-type="user"]');
+        const currentUser = users.filter(u => u.name === selectedUser.textContent)[0];
+        const color = getRandomColor();
+        const box = createObject(Box, boxName, currentUser, color);
 
         boxes.push(box);
 
-        const boxContainer = createObjectContainer('boxes', box, box.owner);
-        boxContainer.addEventListener('change', function() { selectedBox.value = this.value; });
+        const boxContainer = createObjectContainer('box', box.name, box.owner.color, box.color);
+        boxContainer.addEventListener('click', objectClickHandler);
         boxesContainer.appendChild(boxContainer);
 
-        boxForm.boxes.value = boxName;
+        selectObjectContainer('box', boxContainer);
         boxNameInput.value = `Box${boxes.length}`;
     }
 }
 
-function removeBox() {
-    const selectedBoxName = boxForm.boxes.value;
-    boxes = boxes.filter(b => b.name !== selectedBoxName);
+function objectClickHandler() {
+    const currentType = this.getAttribute('data-type');
+    selectObjectContainer(currentType, this);
+}   
 
-    const selectedBoxContainer = [...(boxForm.boxes)].filter(b => b.vlaue === selectedBoxName);
-    boxesContainer.removeChild(selectedBoxContainer);
+function selectObjectContainer(type, object) {
+    const prevSelected = document.querySelector(`.selected[data-type="${type}"]`);
+    if (prevSelected !== object) {
+        object.classList.add('selected');
+        prevSelected?.classList.remove('selected');
+    }
+}
+
+function removeObject() {
+    const currentType = this.form.getAttribute('data-type');
+    const selectedObjContainer = document.querySelector(`.selected[data-type="${currentType}"]`);
+    let objects = getObjectList(currentType);
+    if (objects.length > 1) {
+        const objectsContainer = getObjectContainerList(currentType);
+        const selectedObjName = selectedObjContainer.textContent;
+            
+        objects.splice(objects.findIndex(b => b.name !== selectedObjName), 1);
+        
+        objectsContainer.removeChild(selectedObjContainer);
+    }
 }
 
 function addStaff() {
@@ -176,11 +207,13 @@ function addStaff() {
 
         staffs.push(staff);
 
-        const currentBox = boxes.filter(b => b.name === boxForm.boxes.value)[0];
-        const staffContainer = createObjectContainer('staff', staff, currentBox.owner);
+        const selectedBox = document.querySelector('.selected[data-type="box"]');
+        const currentBox = boxes.filter(b => b.name === selectedBox.textContent)[0];
+        const staffContainer = createObjectContainer('staff', staff.name, currentBox.owner.color, currentBox.color);
         staffsContainer.appendChild(staffContainer);
+        staffContainer.addEventListener('click', objectClickHandler);
 
-        staffForm.staff.value = staffName;
+        selectObjectContainer('staff', staffContainer);
         staffNameInput.value = `Staff${staffs.length}`;
     }
 }

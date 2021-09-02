@@ -15,7 +15,7 @@
         <h2>Select options and create/delete objects.</h2>
         <section class="objects-constructor">
             <section class="object-container">
-                <form class="object-form" id="user-form">
+                <form class="object-form" id="user-form" data-type="user">
                     <input type="text" class="input-text" id="user-name" name="users">
                     <input type="button" value="Add" class="add-button" id="add-user-button">
                     <input type="button" value="Remove" class="remove-button" id="remove-user-button">
@@ -24,7 +24,7 @@
                 </form>
             </section>
             <section class="object-container">
-                <form class="object-form" id="box-form">
+                <form class="object-form" id="box-form" data-type="box">
                     <input type="text" class="input-text" id="box-name" name="boxes">
                     <input type="hidden" id="selected-user-name">
                     <input type="button" value="Add" class="add-button" id="add-box-button">
@@ -34,7 +34,7 @@
                 </form>
             </section>
             <section class="object-container">
-                <form class="object-form" id="staff-form">
+                <form class="object-form" id="staff-form" data-type="staff">
                     <input type="text" class="input-text" id="staff-name" name="staff">
                     <input type="hidden" id="selected-box-name">
                     <input type="button" value="Add" class="add-button" id="add-staff-button">
