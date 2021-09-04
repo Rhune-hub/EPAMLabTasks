@@ -1,5 +1,46 @@
 body {
     background-color:blanchedalmond;
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1,h2 {
+    text-align: center;
+}
+
+.object-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-text {
+    margin: 5px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.form-button {
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 8px 17px;
+    margin: 9px;
+    color: white;
+}
+
+.form-button:hover {
+    filter:brightness(1.1);
+    border: 3px solid black;
+    padding: 6px 15px;
+}
+
+.add-button {
+    background-color:rgb(60, 106, 190);
+}
+
+.remove-button {
+    background-color:rgb(202, 55, 2);
 }
 
 .objects-constructor {
@@ -12,15 +53,33 @@ body {
     display: block;
     padding: 20px;
     margin: 10px;
+    font-weight: bold;
+    text-shadow: 2rem 1.1rem white, -2rem -1.1rem black;
 }
 
-.element-list-label {
-    display: block;
-}
-.object-list-element:checked + .element-list-label {
-    border-radius: 3px solid black;
-}
-.selected {
+.object-list-element{
     border: 1px solid black;
+    border-radius: 3px solid black;
+    text-align: center;
+    width:20vw;
 }
 
+.selected {
+    border: 2px solid black;
+}
+
+.error-container {
+    border: 1px solid black;
+    text-align: center;
+    margin: 1px 10px;
+    padding: 5px 10px;
+    background-color: orangered;
+    width: 25vw;
+    color:beige;
+    font-weight: bold;
+}
+
+.error-container.hidden {
+    height: 0;
+    visibility: collapse;
+}
