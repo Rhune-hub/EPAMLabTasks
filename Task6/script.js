@@ -61,14 +61,15 @@ function createAllPermutationsTable(string) {
     );
 }
 
-function getAllPermutations([...chars]) {
-    const parts = [];
-    parts.push(chars[0]);
+function getAllPermutations(string) {
+    const chars = [...string];
+    const parts = [ chars[0] ];
+    
 
-    for (let i = 1; i < chars.length; ++i) {
+    for (let i = 1; i < chars.length; i++) {
         for (let j = parts.length - 1; j >= 0; --j) {
             const [str] = parts.splice(j,1);
-            for (let k = 0; k <= str.length; ++k) {
+            for (let k = 0; k <= str.length; k++) {
                 parts.push(str.slice(0, k) + chars[i] + str.slice(k));
             }
         }
