@@ -9,37 +9,51 @@
 </head>
 <body>
     <header>
-        <h1>User-Boxes-Staff</h1>
+        <h1>Users-Boxes-Staff</h1>
     </header>
     <main>
         <h2>Select options and create/delete objects.</h2>
         <section class="objects-constructor">
             <section class="object-container">
-                <form class="object-form" id="user-form">
-                    <input type="text" class="input-text" id="user-name" name="users">
-                    <input type="button" value="Add" class="add-button" id="add-user-button">
-                    <input type="button" value="Remove" class="remove-button" id="remove-user-button">
-                    <hr>
+                <form class="object-form" id="user-form" data-type="user">
+                    <div class="form-row">
+                        <input type="text" class="input-text" id="user-name">
+                    </div>
+                    <div class="form-row">
+                        <input type="button" value="Add" class="add-button form-button" id="add-user-button">
+                        <input type="button" value="Remove" class="remove-button form-button" id="remove-user-button">
+                    </div>
+                    <section class="error-container hidden" id="user-error"></section>
                     <div class="object-list-container" id="users-container"></div>
                 </form>
             </section>
             <section class="object-container">
-                <form class="object-form" id="box-form">
-                    <input type="text" class="input-text" id="box-name" name="boxes">
-                    <input type="hidden" id="selected-user-name">
-                    <input type="button" value="Add" class="add-button" id="add-box-button">
-                    <input type="button" value="Remove" class="remove-button" id="remove-box-button">
-                    <hr>
+                <form class="object-form" id="box-form" data-type="box">
+                    <div class="form-row">
+                        <input type="text" class="input-text" id="box-name">
+                        <input type="hidden" id="selected-user-name">
+                    </div>
+                    <div class="form-row">
+                        <input type="button" value="Add" class="add-button form-button" id="add-box-button">
+                        <input type="button" value="Remove" class="remove-button form-button" id="remove-box-button">
+                    </div>
+                    <section class="error-container hidden" id="box-error"></section>
                     <div class="object-list-container" id="boxes-container"></div>
                 </form>
             </section>
             <section class="object-container">
-                <form class="object-form" id="staff-form">
-                    <input type="text" class="input-text" id="staff-name" name="staff">
-                    <input type="hidden" id="selected-box-name">
-                    <input type="button" value="Add" class="add-button" id="add-staff-button">
-                    <input type="button" value="Remove" class="remove-button" id="remove-staff-button">
-                    <hr>
+                <form class="object-form" id="staff-form" data-type="staff">
+                    <div class="form-row">
+                        <input type="text" class="input-text" id="staff-name">
+                        <input type="hidden" id="selected-box-name">
+                    </div>
+                    <div class="form-row">
+                        <input type="button" value="Add" class="add-button form-button" id="add-staff-button">
+                        <input type="button" value="Remove" class="remove-button form-button" id="remove-staff-button">
+                    </div>
+                    <div class="form-row">
+                        <section class="error-container hidden" id="staff-error"></section>
+                    </div>
                     <div class="object-list-container" id="staff-container"></div>
                 </form>
             </section>

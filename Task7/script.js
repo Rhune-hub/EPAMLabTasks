@@ -11,10 +11,11 @@ class Staff extends Entity {
 }
 
 class Box extends Entity {
-    constructor(name, owner) {
+    constructor(name, owner, color) {
         super(name);
         this.owner = owner;
-        this.staff = [];
+        this.staff = new Array();
+        this.color = color;
     }
 }
 
@@ -33,6 +34,13 @@ let users = [];
 let boxes = [];
 let staffs = [];
 
+const error = {
+    USER_ALREADY_EXIST: 'The user with such name is already exist',
+    BOX_ALREADY_EXIST: 'The box with such name is already exist',
+    STAFF_ALREADY_EXIST: 'The staff with such name is already exist',
+    REMOVE_LAST_ELEMENT: 'Last element is not removable'
+
+};
 
 const userNameInput = document.getElementById('user-name');
 const boxNameInput = document.getElementById('box-name');
@@ -53,6 +61,10 @@ const removeUserButton = document.getElementById('remove-user-button');
 const removeBoxButton = document.getElementById('remove-box-button');
 const removeStaffButton = document.getElementById('remove-staff-button');
 
+const userError = document.getElementById('user-error');
+const boxError = document.getElementById('box-error');
+const staffError = document.getElementById('staff-error');
+
 const userForm = document.getElementById('user-form');
 const boxForm = document.getElementById('box-form');
 const staffForm = document.getElementById('staff-form');
@@ -63,7 +75,6 @@ function init() {
     boxNameInput.value = 'ExampleBox';
     staffNameInput.value = 'ExampleStaff';
 
-
     addUser();
     addBox();
     addStaff();
@@ -72,32 +83,9 @@ function init() {
     addBoxButton.addEventListener('click', addBox);
     addStaffButton.addEventListener('click', addStaff);
 
-    removeUserButton.addEventListener('click', removeUser);
-    removeBoxButton.addEventListener('click', removeBox);
-    removeStaffButton.addEventListener('click', removeStaff);
-}
-
-function addUser() {
-    const userName = userNameInput.value.trim();
-
-    const isUserExist = users.includes(u => u.name === userName);
-
-    if (userName && isUserExist)
-        generateError(userError, error.USER_ALREADY_EXIST);
-    else {
-
-        const color = getRandomColor();
-        const user = createObject(User, userName, color);
-
-        users.push(user);
-
-        const userContainer = createObjectContainer('users', user, user);
-        userContainer.addEventListener('change', function () { selectedUser.value = this.value; });
-        usersContainer.appendChild(userContainer);
-
-        userForm.users.value = userName;
-        userNameInput.value = `User${users.length}`;
-    }
+    removeUserButton.addEventListener('click', removeObject);
+    removeBoxButton.addEventListener('click', removeObject);
+    removeStaffButton.addEventListener('click', removeObject);
 }
     
 function createObject(classObject, ...params) {
@@ -106,92 +94,207 @@ function createObject(classObject, ...params) {
     return newObject;
 }
 
-function createObjectContainer(name, object, user) {
-    const container = document.createElement('input');
-    container.type = 'radio';
+function createObjectContainer(type, textContent, bgColor='white', color='black') {
+    const container = document.createElement('div');
     container.classList.add('object-list-element');
-    container.name = name;
-    container.id =  name + '-' + object.name.toLowerCase();
+    container.textContent = textContent;
+    container.setAttribute('data-type', type);
+    container.style.backgroundColor = bgColor;
+    container.style.color = color;
 
-    const label = document.createElement('label');
-    label.htmlFor = name + '-' + object.name.toLowerCase()
-    label.textContent = object.name;
-    label.classList.add('element-list-label');
-    label.style.backgroundColor = user.color;
-
-    container.value = object.name;
-
-    label.appendChild(container);
-    return label;
+    return container;
 }
 
-function removeUser() {
-    const selectedUserName = userForm.users.value;
-    users = users.filter(u => u.name !== selectedUserName);
+function getObjectList(type) {
+    let list = [];
+    switch(type) {
+        case 'user': list = users; break;
+        case 'box': list = boxes; break;
+        case 'staff': list = staffs; break;
+    }
+    return list;
+}
 
-    const selectedUserContainer = [...userForm.users].filter(u => u.vlaue === selectedUserName);
-    console.log(selectedUserContainer)
-    usersContainer.removeChild(selectedUserContainer.parentNode);
+function getObjectsContainer(type) {
+    let list = null;
+    switch(type) {
+        case 'user': list = usersContainer; break;
+        case 'box': list = boxesContainer; break;
+        case 'staff': list = staffsContainer; break;
+    }
+    return list;
+}
+
+function getObjectError(type) {
+    let error = null;
+    switch(type) {
+        case 'user': error = userError; break;
+        case 'box': error = boxError; break;
+        case 'staff': error = staffError; break;
+    }
+    return error;
+}
+
+function getObjectRemoveFunction(type) {
+    let func = () => {};
+    switch(type) {
+        case 'user': func = removeUserInheritance; break;
+        case 'box': func = removeBoxInheritance; break;
+        case 'staff': break;
+    }
+    return func;
+}
+
+function objectClickHandler() {
+    const currentType = this.getAttribute('data-type');
+    selectObjectContainer(currentType, this);
+}   
+
+function selectObjectContainer(type, object) {
+    const prevSelected = document.querySelector(`.selected[data-type="${type}"]`);
+    if (prevSelected !== object) {
+        object.classList.add('selected');
+        prevSelected?.classList.remove('selected');
+    }
+}
+
+function removeObject() {
+    const currentType = this.form.getAttribute('data-type');
+    const selectedObjContainer = document.querySelector(`.selected[data-type="${currentType}"]`);
+    const objects = getObjectList(currentType);
+    const objectError =  getObjectError(currentType);
+    
+    if (objects.length > 1) {
+        hideError(objectError);
+        const objectsContainer = getObjectsContainer(currentType);
+        const selectedObjName = selectedObjContainer.textContent;
+        
+        const removeFunction = getObjectRemoveFunction(currentType);
+        removeFunction(selectedObjContainer);
+
+        objects.splice(objects.findIndex(obj => obj.name === selectedObjName), 1);
+        objectsContainer.removeChild(selectedObjContainer);
+
+        objectsContainer.lastChild?.classList.add('selected');
+    }
+    else {
+        generateError(objectError, error.REMOVE_LAST_ELEMENT)
+    }
+}
+
+function removeUserInheritance(userContainer) {
+    const userBoxes = boxes.filter(b => b.owner.name === userContainer.textContent);
+
+    const userBoxContainers = [...getObjectsContainer('box').children]
+            .filter(b => userBoxes.find(ub => ub.name === b.textContent));
+
+    userBoxContainers.forEach(b => {
+        removeBoxInheritance(b);
+        b.parentNode.removeChild(b);
+    });
+    userBoxContainers.forEach(b => 
+        boxes.splice(boxes.indexOf(box => box.name === b.textContent),1)
+    );
+
+    delete userBoxes;
+}
+
+function removeBoxInheritance(box) {
+    const currentBox = boxes.find(b => b.name === box.textContent);
+    const boxStaffContainers = [...getObjectsContainer('staff').children]
+        .filter(s => currentBox.staff.find(bs => bs.name === s.textContent));
+    
+    boxStaffContainers.forEach(s => {
+        s.parentNode.removeChild(s);
+        staffs.splice(staffs.indexOf(st => st.name === s.textContent),1);
+    });
+    currentBox.staff = [];
+
+}
+
+function addUser() {
+    const userName = userNameInput.value.trim();
+
+    const isUserExist = users.some(u => u.name === userName);
+
+    if (userName && isUserExist)
+        generateError(userError, error.USER_ALREADY_EXIST);
+    else {
+        hideError(userError);
+
+        const color = getRandomColor();
+        const user = createObject(User, userName, color);
+
+        users.push(user);
+
+        const userContainer = createObjectContainer('user', user.name, user.color);
+        userContainer.addEventListener('click', objectClickHandler);
+        usersContainer.appendChild(userContainer);
+
+        selectObjectContainer('user', userContainer);
+        userNameInput.value = `User${users.length}`;
+    }
 }
 
 function addBox() {
     const boxName = boxNameInput.value.trim();
 
-    const isBoxExist = boxes.includes(b => b.name === boxName);
-
-    if (boxName && isBoxExist)
+    const isBoxExist = boxes.some(b => b.name === boxName);
+    if (!boxName || isBoxExist)
         generateError(boxError, error.BOX_ALREADY_EXIST);
     else {
-        const currentUser = users.filter(u => u.name === userForm.users.value);
-        const box = createObject(Box, boxName, currentUser);
+        hideError(boxError);
+
+        const selectedUser = document.querySelector('.selected[data-type="user"]');
+        const currentUser = users.find(u => u.name === selectedUser.textContent);
+        const color = getRandomColor();
+        const box = createObject(Box, boxName, currentUser, color);
 
         boxes.push(box);
 
-        const boxContainer = createObjectContainer('boxes', box, box.owner);
-        boxContainer.addEventListener('change', function() { selectedBox.value = this.value; });
+        const boxContainer = createObjectContainer('box', box.name, box.owner.color, box.color);
+        boxContainer.addEventListener('click', objectClickHandler);
         boxesContainer.appendChild(boxContainer);
 
-        boxForm.boxes.value = boxName;
+        selectObjectContainer('box', boxContainer);
         boxNameInput.value = `Box${boxes.length}`;
     }
-}
-
-function removeBox() {
-    const selectedBoxName = boxForm.boxes.value;
-    boxes = boxes.filter(b => b.name !== selectedBoxName);
-
-    const selectedBoxContainer = [...(boxForm.boxes)].filter(b => b.vlaue === selectedBoxName);
-    boxesContainer.removeChild(selectedBoxContainer);
 }
 
 function addStaff() {
     const staffName = staffNameInput.value.trim();
 
-    const isStaffExist = staffs.includes(b => b.name === staffName);
+    const isStaffExist = staffs.some(b => b.name === staffName);
 
     if (staffName && isStaffExist)
         generateError(staffError, error.STAFF_ALREADY_EXIST);
     else {
+        hideError(staffError);
+
         const staff = createObject(Staff, staffName);
 
         staffs.push(staff);
 
-        const currentBox = boxes.filter(b => b.name === boxForm.boxes.value)[0];
-        const staffContainer = createObjectContainer('staff', staff, currentBox.owner);
+        const selectedBox = document.querySelector('.selected[data-type="box"]');
+        const currentBox = boxes.find(b => b.name === selectedBox.textContent);
+        currentBox.staff.push(staff);
+        const staffContainer = createObjectContainer('staff', staff.name, currentBox.owner.color, currentBox.color);
         staffsContainer.appendChild(staffContainer);
+        staffContainer.addEventListener('click', objectClickHandler);
 
-        staffForm.staff.value = staffName;
+        selectObjectContainer('staff', staffContainer);
         staffNameInput.value = `Staff${staffs.length}`;
     }
 }
 
-function removeStaff() {
-    const selectedStaffName = staffForm.staff.value;
-    staff = staff.filter(b => b.name !== selectedStaffName);
-
-    const selectedStaffContainer = staffContainers.filter(b => b.vlaue === selectedStaffName);
-    staffContainer.removeChild(selectedStaffContainer);
+function generateError(container, message) {
+    container.innerHTML = message;
+    container.classList.remove('hidden');
 }
 
+function hideError(container) {
+    container.classList.add('hidden');
+}
 
 init();
+
