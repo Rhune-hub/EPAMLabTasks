@@ -65,9 +65,10 @@ function testFunction(arr) {
     for (let i = 0; i < arr.length; i++) {
         task(arr, newArr, arr[i], i);
     }
-    console.log("Input\n\r",arr);
-
-    console.log("Output\n\r",newArr);
+    console.group('Array aproximation...');
+    console.log("Input:",arr);
+    console.log("Output:",newArr);
+    console.groupEnd();
 }
 
 function task(arr,newArr, elem, ...r) {
