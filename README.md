@@ -81,3 +81,17 @@ Output: ABC, ACB, BAC, BCA, CAB, CBA​
 3) Add example of usage of these classes, e.g., create some instances, display data related to them​
 
 4) Push code to repo “sweet sugar”
+
+# EPAMLabTask 8
+
+1) Given array of numbers [x]. Find “approx” [y] array where ```javascript
+y[i] = x[i-1] + x[i+1]​
+```
+
+2) Example: ```javascript
+[1, 2, 3, 4] => [2, 4, 6, 3]​
+```
+
+3)* Write function that can perform this calculation for multidimensional arrays​
+
+4) Push code to repo “Agent Smith”
