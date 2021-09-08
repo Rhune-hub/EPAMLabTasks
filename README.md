@@ -57,3 +57,41 @@ Example of object:
 3)* For performance reason add memoization mechanism
 
 4) Push code to repo “Sum of Row”
+
+# EPAMLabTask 6
+
+1) Implement program to print all permutations of a given string​
+
+Example:
+```javascript
+Input: ABC​
+
+Output: ABC, ACB, BAC, BCA, CAB, CBA​
+```
+2)* Print all permutations in sorted (lexicographic) order​
+
+3) Push code to repo “momentoMemory”
+
+# EPAMLabTask 7
+
+1) Describe base class Entity that can store name​
+
+2) Implement child classes Stuff, Box, User. Box can store some stuff[]. Every box belongs to user​
+
+3) Add example of usage of these classes, e.g., create some instances, display data related to them​
+
+4) Push code to repo “sweet sugar”
+
+# EPAMLabTask 8
+
+1) Given array of numbers [x]. Find “approx” [y] array where ```javascript
+y[i] = x[i-1] + x[i+1]​
+```
+
+2) Example: ```javascript
+[1, 2, 3, 4] => [2, 4, 6, 3]​
+```
+
+3)* Write function that can perform this calculation for multidimensional arrays​
+
+4) Push code to repo “Agent Smith”
