@@ -62,39 +62,41 @@ function init() {
 function testFunction(arr) {
     const newArr = JSON.parse(JSON.stringify(arr));
     
-    for (let i = 0; i < arr.length; i++) {
-        task(arr, newArr, arr[i], i);
-    }
+    aproximateArray(arr, newArr, arr);
     console.group('Array aproximation...');
     console.log("Input:",arr);
     console.log("Output:",newArr);
     console.groupEnd();
 }
 
-function task(arr,newArr, elem, ...r) {
+function aproximateArray(arr,newArr, elem, ...indexes) {
     if (Array.isArray(elem)) {
         for (let i = 0; i < elem.length; i++) {
-            task(arr, newArr, elem[i], ...r, i);
+            aproximateArray(arr, newArr, elem[i], ...indexes, i);
         }
     }
     else {
-        let i;
+        let selectedIndex;
         let newArrElement = newArr;
+        let tempArr = arr;
         const aprox = [];
-        for (i = 0; i < r.length; i++) {
-            let [one, two] = [arr, arr];
-            for (let j = 0; j < r.length; j++)
-                if (i !== j)
-                    [one, two] = [ one ? one[r[j]] : 0, two ? two[r[j]] : 0];
+        for (selectedIndex = 0; selectedIndex < indexes.length; selectedIndex++) {
+            let [firstNeighbor, secondNeighbor] = [tempArr, tempArr];
+            for (let depthIndex = selectedIndex; depthIndex < indexes.length; depthIndex++)
+                if (selectedIndex !== depthIndex)
+                    [firstNeighbor, secondNeighbor] = [ firstNeighbor ? firstNeighbor[indexes[depthIndex]] : 0, 
+                                                        secondNeighbor ? secondNeighbor[indexes[depthIndex]] : 0];
                 else
-                    [one, two] = [  r[j] > 0 ? one[r[j]-1] : 0, 
-                                    r[j] < two.length - 1 ? two[r[j]+1] : 0 ];
-            aprox.push(one, two);
+                    [firstNeighbor, secondNeighbor] = [  indexes[depthIndex] > 0 ? firstNeighbor[indexes[depthIndex]-1] : 0, 
+                                    indexes[depthIndex] < secondNeighbor.length - 1 ? secondNeighbor[indexes[depthIndex]+1] : 0 ];
+            aprox.push(firstNeighbor, secondNeighbor);
 
-            if (i < r.length - 1)
-                newArrElement = newArrElement[r[i]];
+            if (selectedIndex < indexes.length - 1) {
+                newArrElement = newArrElement[indexes[selectedIndex]];
+                tempArr = tempArr[indexes[selectedIndex]];
+            }
         }
-        newArrElement[r[i-1]] = aprox.reduce( (a, b) => a + b );   
+        newArrElement[indexes[selectedIndex-1]] = aprox.reduce( (acc, elem) => acc + elem );   
     }
 }
 
