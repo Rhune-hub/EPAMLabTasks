@@ -61,8 +61,7 @@ function createAllPermutationsTable(string) {
     );
 }
 
-function getAllPermutations(string) {
-    const chars = [...string];
+function getAllPermutations(chars) {
     const parts = [ chars[0] ];
     
 
