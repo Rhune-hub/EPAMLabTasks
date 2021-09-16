@@ -95,7 +95,6 @@ y[i] = x[i-1] + x[i+1]​
 3)* Write function that can perform this calculation for multidimensional arrays​
 
 4) Push code to repo “Agent Smith”
-
 # EPAMLabTask 9
 
 1) Using js construct on page Tic-Tac-Toe layout​
