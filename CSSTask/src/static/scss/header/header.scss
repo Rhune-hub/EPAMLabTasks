@@ -1,0 +1,39 @@
+$base-font: bold 1.5rem monospace;
+
+.header {
+    display: flex;
+    flex-direction: column;
+    grid-area: header;
+
+    width: 1300px;
+    height: 500px;
+
+    background: url(../img/header.jpg);
+
+font: $base-font;
+}
+
+.header__info-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width:81%;
+    padding: 40px 80px;
+}
+
+.header__title-container {
+    display: flex;
+    grid-area: header;
+    flex-direction: column;
+    justify-content: center;
+
+    align-self: center;
+    padding: 180px;    
+}
+
+.header__title {
+}
+
+.header__subtitle {
+}

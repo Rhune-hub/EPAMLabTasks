@@ -1,0 +1,39 @@
+.aside {
+    grid-area: aside;
+
+    padding: 149px 78px;
+}
+
+.aside__section {
+    width:100%;
+}
+
+.posts-selector-form__radios {
+    display: flex;
+    justify-content: flex-start;
+}
+.posts-selector-form__radio {
+    display: none;
+}
+
+.posts-selector-form__label+.posts-selector-form__radio:checked {
+    border-bottom: 3px solid green;
+    padding: 5px;
+}
+
+
+
+.list__element {
+    display: block;
+
+    
+    border-bottom: 1px solid black;
+}
+
+.list-element__link {
+    display: flex;
+    justify-content: space-between;
+    width:100%;
+    padding: 10px;
+    text-decoration: none;
+}

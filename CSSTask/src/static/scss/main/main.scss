@@ -1,0 +1,16 @@
+.main {
+    grid-area: main;
+    width:798px;
+    padding: 149px 79px;
+}
+
+.main__section {
+    display: flex;
+    flex-direction: column;
+   
+    width: 100%;
+}
+
+.posts-section__post {
+    width: 100%;
+}
