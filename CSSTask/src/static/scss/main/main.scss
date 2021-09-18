@@ -1,6 +1,8 @@
+@import "../vars.scss";
+
 .main {
     grid-area: main;
-    width:798px;
+    width:752px;
     padding: 149px 79px;
 }
 
@@ -13,4 +15,55 @@
 
 .posts-section__post {
     width: 100%;
+    margin-bottom: 100px;
 }
+
+.post__info-row {
+    display: flex;
+    margin: 27px 0 10px 0;
+}
+
+.main-post__date-container {
+    padding: 7px 28px;
+    background-color: $mint-color;
+    
+}
+
+.main-post__date {
+    color: $white-color;
+    font-weight: bold;
+}
+
+.post__comments-info, .post__likes-info {
+    display: flex;
+    align-items: center;
+    ;
+    margin: 0 12px 0 7px;
+    
+}
+
+.post__comments-count, .post__likes-count {
+    color:$back-color;
+    margin: 0 6px;
+}
+
+.icon-image {
+    opacity: 0.7;
+}
+
+.post__title {
+    color: $title-color;
+    font-size: 19px;
+}
+
+.post__start-text {
+    color: $back-color;
+}
+
+.post__post-link {
+    color: $title-color;
+    font-size: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
