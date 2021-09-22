@@ -105,3 +105,13 @@ y[i] = x[i-1] + x[i+1]​
 3) Add module that can write down on page game result (1st win, 2nd win or draw)​
 
 4) Push code to repo “TicTacToe”
+
+# EPAMLabTask 10
+
+1) Add to html page table with header and some rows​
+
+2) Add to header event listener to implement sorting functionality across the table data (alphabetical)​
+
+3) Add to cells user interaction feature (click and edit text)​
+
+4) Push code to repo “table”
