@@ -28,17 +28,7 @@ p {
     justify-content: space-around;
 }
 
-.form-label {
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.form-block {
-    display: grid;
-    place-items: center;
-}
-
-.error-block:before {
+.form__error:before {
     content: "!";
     padding: 0.25rem 0.5rem 0.25rem 0.25rem;
     line-height: 1rem;
@@ -46,7 +36,7 @@ p {
     font-size: 2rem;
 }
 
-.error-block {
+.form__error {
     display: block;
     margin: 1rem;
     padding: 0.8rem;
@@ -64,7 +54,7 @@ p {
     transition: visibility 0s linear 300ms, opacity 500ms;
 }
 
-.number-text {
+.form__input, .form__output {
     border-radius: 3rem;
     text-align: center;
     margin: 0.25rem;
@@ -74,50 +64,12 @@ p {
     border: 3px solid black;
 }
 
-.faq-point {
-    display: inline-block;
-    font-family: sans-serif;
-    font-weight: 900;
-    text-align: center;
-    width: 4rem;
-    height: 4rem;
-    font-size: 2.5rem;
-    line-height: 3rem;
-    border-radius: 2rem;
-    margin-top: 1rem;
-    color:cornflowerblue;
-    background: whitesmoke;
-    border: 3px solid cornflowerblue;
-}
-
-.faq-point:hover {
-    border-color: whitesmoke;
-    color: whitesmoke;
-    background-color: cornflowerblue;
-}
-
-.faq {
-    width: 80%;
-    background-color:lavenderblush;
-    margin: 1rem;
-    padding: 0.2rem 1.2rem;
-    border: 3px solid black;
-    border-radius: 3rem;
-    text-align: center;
-    font-size: 1.2rem;
-    transition: visibility 0s linear 300ms, opacity 300ms;
-}
-
-.input-number {
-    width: 14rem;
-}
-
-.input-number:focus {
+.form__input:focus {
     outline: none;
 }
 
-.output-number {
+.form__output {
     background-color: beige;
-    min-width: 8rem;
-    max-width: 20rem;
+    width: 200px;
+    height: 30px;
 }
