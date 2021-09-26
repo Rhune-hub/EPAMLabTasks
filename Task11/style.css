@@ -70,6 +70,7 @@ p {
 
 .form__output {
     background-color: beige;
-    width: 200px;
-    height: 30px;
+    min-width: 10rem;
+    max-width: 20rem;
+    height: 2rem;
 }

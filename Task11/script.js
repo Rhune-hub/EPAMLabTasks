@@ -2,7 +2,7 @@ const input = document.getElementById('rpn-string');
 const output = document.getElementById('result');
 const errorContainer = document.getElementById('error');
 
-const defaultString = '2 4 + 3 * 6 8 - -';
+const defaultString = '1 2 + 3 * 4 +';
 
 const operators = {
   '+': (x, y) => x + y,
@@ -11,9 +11,29 @@ const operators = {
   '/': (x, y) => x / y,
 };
 
+let memoizeSolveRpnString;
+
 const errorMessage = {
   INVALID_CHARS: 'Input string has invalid chars. Use only numbers,space and +, -, *, /.',
   INCORRECT_ARGS_COUNT: 'Input string has incorrect ration of numbers and operators.',
+}
+
+function memoize(func) {
+  const memory = {};
+  return ((f) =>
+      async (...key) => {
+          if (key in memory) {
+              const value = memory[key];
+              console.log(`Get from memory: [${key}] : ${value}`);
+              return value;
+          }
+
+          const result = await f(...key);
+          if (result)
+            memory[key] = result;
+          return result;
+      }
+  )(func);
 }
 
 function sleep(ms) {
@@ -25,7 +45,7 @@ function getRandomInt(min=0, max=1000) {
 }
   
 function getRandomSleepMS() {
-  return getRandomInt(100,3000);
+  return getRandomInt(1000,5000);
 }
   
 async function asyncOperation(operation, x, y) {
@@ -42,6 +62,7 @@ async function evaluate(tokens) {
       let [y, x] = [stack.pop(), stack.pop()];
       const result = await asyncOperation(operators[token],x, y);
       stack.push(result);
+ 
     } else {
       stack.push(parseFloat(token));
     }
@@ -51,7 +72,7 @@ async function evaluate(tokens) {
 };
 
 function getRpnTokens(str, errorContainer) {
-  const tokens = str.trim().replace(/\s+/,' ').split(' ');
+  const tokens = str.replace(/\s+/,' ').split(' ');
   const errors = validateRpnTokens(tokens);
   const errorMessages = Object.values(errors);
 
@@ -65,19 +86,16 @@ function getRpnTokens(str, errorContainer) {
 
 function validateRpnTokens(tokens) {
   const isInvalidChars = (tokens) => 
-                    tokens.every(token => {let a= Number.isNaN(token) && !(token in operators)
-                      console.log(a)
-                      return a;});
-  const isIncorrectArgsCount = (tokens) => {
-                    let a = tokens.reduce((acc, val) => 
-                      acc + (isNaN(val) ? 1 : -1), 1);
-  console.log(a); return(a);
-                    }
-  //очень не работают функции сравнния
+      tokens.every(token => Number.isNaN(token) && !(token in operators));
+
+  const isIncorrectArgsCount = (tokens) =>
+      tokens.reduce((acc, val) => acc + (isNaN(val) ? 1 : -1), 1);
+    
   const errors = {};                  
 
   if (isInvalidChars(tokens))
     errors.invalidChars =  errorMessage.INVALID_CHARS;
+
   if (isIncorrectArgsCount(tokens))
     errors.incorrectArgsCount = errorMessage.INCORRECT_ARGS_COUNT;
 
@@ -100,35 +118,26 @@ function showError(errorBox, errorMessage) {
 function hideError(errorBox) {
   errorBox.classList.add('hidden');
 }
-async function decideRpnString(str) {
+async function solveRpnString(str) {
   const tokens = getRpnTokens(str, errorContainer);
-  console.log(tokens);
   const result = tokens ? await evaluate(tokens) : null;
 
   return result;
 }
 
 async function inputHandler(event) {
-  console.log(event.keyCode)
-  const str = this.value;
+  const str = this.value.trim();
   output.value = 'Waiting...';
-  const result = await decideRpnString(str) || '-';
-  output.value = result;
+  const result = await memoizeSolveRpnString(str) || '-';
+  if (str === this.value.trim()) 
+    output.value = result;
 }
 
-// function keyDownHandler(event) {
-//   if (parseInt(event.key) || event.key in operators || event.key === 'backspace')
-  
-//   this.value += ' '; else
-//   event.preventDefault();
-
-// }
-
-async function init() {
+function init() {
   input.addEventListener('input',inputHandler);
- // input.addEventListener('keydown', keyDownHandler);
+  memoizeSolveRpnString = memoize(solveRpnString);
   input.value = defaultString;
-  output.value = await decideRpnString(defaultString);
+  inputHandler.call(input);
 }
 
 init();
