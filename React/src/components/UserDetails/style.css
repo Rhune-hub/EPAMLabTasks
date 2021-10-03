@@ -1,0 +1,19 @@
+.user-details__container {
+    display:flex;
+    justify-content: space-around;
+    margin: 5vh 2vw 2vh 2vw;
+    padding: 1vw;
+    border-radius: 15px;
+    box-shadow: 5px 5px 24px gray;  
+    background-color:antiquewhite;
+  }
+
+  @media (max-width : 768px) {
+    .user-details__container {
+      flex-direction: column;
+      align-items: center;
+      min-width: 650px;
+      max-width: 98vw;
+      margin: 2vh 1vw 1vh 1vw;
+    }
+  }

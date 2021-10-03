@@ -1,0 +1,11 @@
+.avatar__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .avatar__image {
+    border-radius: 50%;
+    border: 15px solid tomato;
+    box-shadow: 0 0 10px brown;
+  }
