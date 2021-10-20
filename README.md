@@ -105,3 +105,41 @@ y[i] = x[i-1] + x[i+1]​
 3) Add module that can write down on page game result (1st win, 2nd win or draw)​
 
 4) Push code to repo “TicTacToe”
+
+# EPAMLabTask 10
+
+1) Add to html page table with header and some rows​
+
+2) Add to header event listener to implement sorting functionality across the table data (alphabetical)​
+
+3) Add to cells user interaction feature (click and edit text)​
+
+4) Push code to repo “table”
+
+# EPAMLabTask 11
+
+1) Develop 4 functions that can perform operations +, -, *, / but return result with some random delay (> than 1sec)​
+
+2) Create stack calculation module that can interact with mentioned before functions and handle Reverse Polish notation input​
+
+3) Calculate “1 2 + 3 × 4 +”​
+
+4) Push code to repo “quirk numbers”
+
+# EPAMLabTask 12
+
+1) Develop page with two dropdowns “Title” and “Category”​
+
+2) Values of selections should invoke render of data from https://api.publicapis.org/​
+
+3) Handle possible error cases​
+
+4) Push code to repo “Asian chronicle”
+
+# EPAMLabTask 13
+
+1) Convert your code from previous HT by the Babel transpiler to ES5 version​
+
+2) Check working status of app for different browsers​
+
+3) Push code to repo “Rome”
