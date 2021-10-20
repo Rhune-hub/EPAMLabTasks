@@ -26,7 +26,6 @@ const reducer = (state = defaultState, action) => {
         case 'UNSET_ACTIVE_PHOTO':
             return {...state, activePhoto: null};
         case 'SET_USER':
-            console.log(state.user, action.payload, action, state)
             return {...state, user: action.payload};
         case 'SET_ALBUMS':
             return {...state, albums: [...action.payload, ...state.localAlbums]};

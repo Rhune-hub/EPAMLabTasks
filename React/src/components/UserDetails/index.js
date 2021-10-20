@@ -12,7 +12,6 @@ export default function UserDetails() {
     
     const setUser = () => {
         dispatch({type:'SET_USER', payload: userObject})
-        console.log(user, userObject)
     }
 
     useEffect(() => {

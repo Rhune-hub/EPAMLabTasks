@@ -53,12 +53,7 @@ export default function Content() {
     const setAlbums = (albums) => {
         dispatch({type:'SET_ALBUMS', payload: albums});
     }
-
-    // const [albums, setAlbums] = useState([]);
-    // const [photos, setPhotos] = useState([]);
-    // const [activeAlbum, setActiveAlbum] = useState(null);
-    // const [activePhoto, setActivePhoto] = useState(null);
-
+    
     const albumClickHandler = useCallback((e) => {        
         const currentId = Number(e.currentTarget.dataset.id);
 
