@@ -151,3 +151,11 @@ y[i] = x[i-1] + x[i+1]​
 2) Implement dynamic import for module​
 
 3) Push code to repo “multi_module”
+
+# EPAMLabTask 15
+
+1) Develop page with stored state that can “restore” user name and predefined theme (dark or light)​
+
+2) Apply this module to existing app (from previous task)​
+
+3) Push code to repo “day & night”
