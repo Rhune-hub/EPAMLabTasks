@@ -1,8 +1,6 @@
 import React, {useEffect, useCallback} from 'react'
 import ListItem from '../ListItem'
 import './style.css'
-import hardCodeAlbums from '../../data/hardCodeAlbums.json';
-import hardCodePhotos from '../../data/hardCodePhotos.json';
 import { useDispatch, useSelector } from 'react-redux';
 import AddAlbumForm from '../AddAlbumForm';
 import AddPhotoForm from '../AddPhotoForm';
@@ -55,7 +53,6 @@ export default function Content() {
         .then(res => res.json())
         .then(data => setPhotos(data))
         .catch((e) => console.log(e.message));
-        console.log(currentId);
         setActiveAlbum(currentId);
     });
 

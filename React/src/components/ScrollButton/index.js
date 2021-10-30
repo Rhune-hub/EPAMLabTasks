@@ -11,8 +11,6 @@ export default function ScrollButton({direction}) {
 
     if (direction === 'top') {
         scrollButtonClickHandler = (e) => {
-            console.log(show)
-
             window.scrollTo(window.scrollX, 0);
         }
         scrollHandler = (e) => {
@@ -35,7 +33,7 @@ export default function ScrollButton({direction}) {
         }
     }
 
-    window.addEventListener('scroll', scrollHandler)
+    window.addEventListener('scroll', scrollHandler);
     if (!show) return null;
     return (
         <div className="scroll-button__container" data-type={direction}>
