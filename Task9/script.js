@@ -8,7 +8,7 @@ const gameSymbol = {
     DRAW: '-',
 };
 
-let isX, gameMove, gameMatrix;
+let isX, gameMove;
 
 function init() {
     restartButton.addEventListener('click', setStartGameParams);
@@ -18,11 +18,7 @@ function init() {
 function setStartGameParams() {
     isX = true;
     gameMove = 0;
-    gameMatrix = [
-        ['','',''],
-        ['','',''],
-        ['','',''],
-    ];
+
     gameFields.forEach(field => {
         field.addEventListener('click', clickHandler);
         field.textContent = '';
@@ -32,71 +28,67 @@ function setStartGameParams() {
 }
 
 function clickHandler() {
-    if (this.textContent === '') {
-        this.textContent = isX ? gameSymbol.CROSS : gameSymbol.NOUGHT;
-        const [fieldIndexJ, fieldIndexI]= this.className.split(' ').slice(1);
-        setGameMatrix(fieldIndexI, fieldIndexJ, this.textContent);
-        isX = !isX;
-        gameMove++;
-        if (gameMove >= 5) {
-            const winner = checkWinner();
-            if (winner) 
-                setResult(winner);
-        }
-    }
-}
+    this.textContent = isX ? gameSymbol.CROSS : gameSymbol.NOUGHT;
+    const { i, j } = this.dataset;
 
-function setGameMatrix(iString, jStirng, value) {
-    const matrixIndex = {
-        'left': 0,
-        'top': 0,
-        'right': 2,
-        'bottom': 2,
-        'middle': 1
-    };
-    const [i, j] = [matrixIndex[iString], matrixIndex[jStirng]]
-    gameMatrix[i][j] = value;
+    isX = !isX;
+    gameMove++;
+    if (gameMove >= 5) {
+        const winner = checkWinner(this.textContent);
+        if (winner) 
+            setResult(winner);
+    }
+
+    this.removeEventListener('click', clickHandler);
 }
 
 function compare(a, b, c) {
     return a === b && a === c && a !== '';
 }
 
-function checkWinner() {
+function checkWinner(player) {
+    const winMatrix = [
+        [ [0, 0], [0, 1], [0, 2] ],
+        [ [1, 0], [1, 1], [1, 2] ],
+        [ [2, 0], [2, 1], [2, 2] ],
+
+        [ [0, 0], [1, 0], [2, 0] ],
+        [ [0, 1], [1, 1], [2, 1] ],
+        [ [0, 2], [1, 2], [2, 2] ],
+        
+        [ [0, 0], [1, 1], [2, 2] ],
+        [ [0, 2], [1, 1], [2, 0] ],
+    ];
+    
+    const isWin = winMatrix.some(combinations => {
+        const ceils = combinations.reduce((accum, indexes) => {
+            const [i, j] = indexes;
+            return [...accum, gameFields[i*3+j].textContent];
+        }, []);
+        return compare(...ceils);
+    });
+
     let winner = null;
-
-    for (let i = 0; i < 3; i++) {
-        if (compare(gameMatrix[i][0], gameMatrix[i][1], gameMatrix[i][2])) {
-            winner = gameMatrix[i][0];
-            break;
-        }
-        if (compare(gameMatrix[0][i], gameMatrix[1][i], gameMatrix[2][i])) {
-            winner = gameMatrix[0][i];
-            break;
-        }
-    }
-
-    if (compare(gameMatrix[0][0], gameMatrix[1][1], gameMatrix[2][2]))
-        winner = gameMatrix[0][0];
     
-    if (compare(gameMatrix[0][2], gameMatrix[1][1], gameMatrix[2][0]))
-        winner = gameMatrix[0][2];
-
-    if (gameMove === 9)
+    if (isWin)
+        winner = player;
+    else if (gameMove === 9) 
         winner = gameSymbol.DRAW;
-    
+
     return winner;
 }
 
 function setResult(winner) {
     const resultStrings = {
-        'X': 'The First player WIN!',
-        'O': 'The Second player WIN!',
-        '-': 'The DRAW!',
+        [gameSymbol.CROSS]: 'The First player WIN!',
+        [gameSymbol.NOUGHT]: 'The Second player WIN!',
+        [gameSymbol.DRAW]: 'The DRAW!',
     }
     resultField.textContent = resultStrings[winner];
     resultField.classList.remove('hidden');
-    gameFields.forEach(field => field.removeEventListener('click',clickHandler));
+    gameFields
+        .filter(field => field.textContent === '')
+        .forEach(field => field.removeEventListener('click',clickHandler));
 }
 
 init();
