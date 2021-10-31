@@ -5,6 +5,12 @@ function Product(name, price, weight) {
     this.total = (this.price * this.weight).toFixed(2);
 }
 
+const CLASSES = {
+    SORTED: 'sorted', 
+    INCREASE_SORT: 'increase-sort', 
+    DECREASE_SORT: 'decrease-sort'
+};
+
 let defaultArray = [
     new Product('Apple', 3, 2.3),
     new Product('Potato', 2, 6),
@@ -16,6 +22,7 @@ let defaultArray = [
     new Product('Coconut', 6.8, 1.8),
     new Product('Tomato', 3.1, 2.5),
 ];
+let sortedArray = null;
 
 const tableId = 'product-cart-table';
 
@@ -23,8 +30,7 @@ let sortByColumn = null;
 let sortDirection = 1;
 
 function init() {
-    const headers = Object.keys(new Product())
-                .map(name => [name[0].toUpperCase(), name.slice(1)].join(''));
+    const headers = ['Name', 'Price', 'Weight', 'Total'];
     const table = createTable('Product Cart',tableId, headers, defaultArray);
     document.body.appendChild(table);
 }
@@ -105,9 +111,9 @@ function tableCellClickHandler(event) {
             const selectedPropName = selectedCell.textContent.toLowerCase();
             const isCurrentColumn = sortByColumn === selectedPropName;
             if (isCurrentColumn)
-                sortDirection = -sortDirection;
-            defaultArray = sortByProperty(defaultArray, selectedPropName);
-            updateTable(tableId, defaultArray, selectedCell, sortDirection);
+                sortDirection = -1 * sortDirection;
+            sortedArray = sortByProperty(sortedArray || defaultArray, selectedPropName);
+            updateTable(tableId, sortedArray, selectedCell, sortDirection);
             sortByColumn = selectedPropName;
             break;
         case 'TD':
@@ -123,13 +129,11 @@ function sortByProperty(array, propName) {
 }
 
 function updateTable(tableId, array, header, sortDirection) {
-    const sortedClasses = ['sorted', 'increase-sort', 'decrease-sort'];
-    const [sorted, increaseSort, decreaseSort] = sortedClasses;
     document.querySelectorAll('.table-header__cell')
                 .forEach(header => header.classList
-                                    .remove(...sortedClasses));
-    const sortType = sortDirection === 1 ? increaseSort : decreaseSort;
-    header.classList.add(sorted, sortType);
+                                    .remove(...Object.values(CLASSES)));
+    const sortType = sortDirection === 1 ? CLASSES.INCREASE_SORT : CLASSES.DECREASE_SORT;
+    header.classList.add(CLASSES.SORTED, sortType);
 
     const newTableBody = createTableBody(array);
     const table = document.getElementById(tableId);
