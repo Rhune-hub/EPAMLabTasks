@@ -1,0 +1,21 @@
+.user-info__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    width: 60%;
+    min-width: 600px;
+    padding: 0.5rem 1rem;
+    
+    font: bold 1.25em sans-serif;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px darkkhaki;
+    
+    background-color:khaki;
+  }
+
+  @media (max-width : 768px) {
+    .user-info__container {
+      min-width: 90vw;
+    }
+  }

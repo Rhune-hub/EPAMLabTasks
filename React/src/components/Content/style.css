@@ -1,0 +1,21 @@
+.content__container {
+    max-width: 90vw;
+    min-width: 60vw;
+    margin: 2vh auto;
+    
+    border-radius: 15px;
+    box-shadow: 5px 5px 24px gray;
+    font: bold 1.25em sans-serif;
+  
+    background-color:rgb(250, 242, 228);
+  }
+  
+  .content__title {
+      text-align: center;
+  }
+  
+  .content__posts {
+    display:flex;
+    flex-direction: column;
+  }
+  

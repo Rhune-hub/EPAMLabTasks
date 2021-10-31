@@ -1,0 +1,15 @@
+.user-info-company__details {
+    width:70%;
+}
+
+.user-info-company__container {
+    display: flex;
+    justify-content:space-between;
+    border-bottom: 2px solid black;
+}
+
+.user-info-company__title {
+    align-self: center;
+    padding: 7px;
+    margin: 7px;
+}
