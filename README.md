@@ -125,3 +125,37 @@ y[i] = x[i-1] + x[i+1]​
 3) Calculate “1 2 + 3 × 4 +”​
 
 4) Push code to repo “quirk numbers”
+
+# EPAMLabTask 12
+
+1) Develop page with two dropdowns “Title” and “Category”​
+
+2) Values of selections should invoke render of data from https://api.publicapis.org/​
+
+3) Handle possible error cases​
+
+4) Push code to repo “Asian chronicle”
+
+# EPAMLabTask 13
+
+1) Convert your code from previous HT by the Babel transpiler to ES5 version​
+
+2) Check working status of app for different browsers​
+
+3) Push code to repo “Rome”
+
+# EPAMLabTask 14
+
+1) Split your code from previous HM to some modules (at least 2)​
+
+2) Implement dynamic import for module​
+
+3) Push code to repo “multi_module”
+
+# EPAMLabTask 15
+
+1) Develop page with stored state that can “restore” user name and predefined theme (dark or light)​
+
+2) Apply this module to existing app (from previous task)​
+
+3) Push code to repo “day & night”
