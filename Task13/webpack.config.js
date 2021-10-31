@@ -7,6 +7,7 @@ const config = {
     path: path.resolve(__dirname, 'bundle'),
     filename: 'index.js'
   },
+  mode: "production",
   module: {
     rules: [
       {

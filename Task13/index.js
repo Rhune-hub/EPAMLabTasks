@@ -1,5 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import "isomorphic-fetch"
 
 const categoriesSelect = document.getElementById('categories');
 const titlesSelect = document.getElementById('titles');
