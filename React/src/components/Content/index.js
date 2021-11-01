@@ -1,17 +1,42 @@
 import React from 'react'
-import PostItem from '../PostItem'
+import ListItem from '../ListItem'
 import './style.css'
-import contentObject from '../../data/content.json'
 
-export default function Content() {
-    const content = contentObject;
+export default class Content extends React.Component {
+    constructor() {
+        super();
+        this.state = { albums: [] };
+    }
 
-    return (
-        <div class="content__container">
-            <div className="content__title"><h2>{content.title}</h2></div>
-            <div className="content__posts">
-                {content.posts.map(post => <PostItem text={post}/>)}
-            </div>
-        </div>
-    )
+
+
+    async componentDidMount() {
+        try {
+            const data = await (await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${this.props.userId}`)).json();
+            console.log(data)
+            this.setState({ albums: data });
+
+        } catch(e) {
+            console.log(e.message)
+        }
+    }
+
+    render() {
+        return (
+            <div class="content__container">
+                { this.state.albums.length === 0 
+                ? <h3>Something went wrong during getting content.</h3> 
+                : ( <>
+                    <div className="content__title">
+                        <h2>Albums</h2>
+                    </div>
+                    <div className="content__list-container">
+                        <ul className="content__list">
+                            {this.state.albums.map(album => <ListItem title={album.title} key={album.id}/>)}
+                        </ul>
+                    </div> 
+                    </>
+                 ) }
+        </div>)
+    }
 }
