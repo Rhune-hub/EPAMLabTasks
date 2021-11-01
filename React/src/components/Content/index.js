@@ -11,7 +11,7 @@ export default function Content({userId}) {
     const albumClickHandler = useCallback((e) => {        
         const currentId = Number(e.currentTarget.dataset.id);
 
-        fetch(`https://jsonplaceholder.typicode.com/users/${userId}/albums/${currentId}/photos`)
+        fetch(`https://jsonplaceholder.typicode.com/albums/${currentId}/photos`)
         .then(res => res.json())
         .then(data => setPhotos(data))
         .catch((e) => console.log(e.message));
@@ -34,7 +34,7 @@ export default function Content({userId}) {
     });
     
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/albums')
+        fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
             .then(res => res.json())
             .then(data => setAlbums(data))
             .catch((e) => console.log(e.message));
