@@ -5,7 +5,7 @@ import hardCodeAlbums from '../../data/hardCodeAlbums.json';
 import hardCodePhotos from '../../data/hardCodePhotos.json';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function Content() {
+export default function Content({userId}) {
     const dispatch = useDispatch();
     
     const localAlbums = useSelector(state => state.localAlbums);
@@ -80,7 +80,7 @@ export default function Content() {
     });
     
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/albums')
+        fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
             .then(res => res.json())
             .then(data => setAlbums(data))
             .catch((e) => console.log(e.message));

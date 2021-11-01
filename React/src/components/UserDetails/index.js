@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import Avatar from '../Avatar'
 import UserInfo from '../UserInfo'
+import Content from '../Content'
 import userObject from '../../data/user.json'
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,8 +22,13 @@ export default function UserDetails() {
     return (
         user
         ? (<div className="user-details__container" data-user-id={user.id}>
-            <Avatar src={user.avatar}/>
-            <UserInfo user={user.info}/>
+                <div className="user-details__info">
+                    <Avatar src={user.avatar}/>
+                    <UserInfo user={user.info}/>
+                </div>
+                <div className="user-details__content">
+                    <Content userId={user.id}/>
+                </div>
         </div>)
         : <></>
     )
