@@ -12,7 +12,7 @@ export default class Content extends React.Component {
 
     async componentDidMount() {
         try {
-            const data = await (await fetch('https://jsonplaceholder.typicode.com/albums')).json();
+            const data = await (await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${this.props.userId}`)).json();
             console.log(data)
             this.setState({ albums: data });
 
