@@ -53,4 +53,3 @@ So UX should be next:
 3.	there is should be back button to go back to albums in case if you are on “photos” page (fells free to choose place for it)
  
 ![App new design](./newDesign.jpg)
-
