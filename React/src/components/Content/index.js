@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react'
 import ListItem from '../ListItem'
 import './style.css'
 
-export default function Content() {
+export default function Content({userId}) {
     const [albums, setAlbums] = useState([]);
     const [photos, setPhotos] = useState([]);
     const [activeAlbum, setActiveAlbum] = useState(null);
@@ -11,7 +11,7 @@ export default function Content() {
     const albumClickHandler = useCallback((e) => {        
         const currentId = Number(e.currentTarget.dataset.id);
 
-        fetch(`https://jsonplaceholder.typicode.com/albums/${currentId}/photos`)
+        fetch(`https://jsonplaceholder.typicode.com/users/${userId}/albums/${currentId}/photos`)
         .then(res => res.json())
         .then(data => setPhotos(data))
         .catch((e) => console.log(e.message));
