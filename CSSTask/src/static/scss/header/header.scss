@@ -8,7 +8,7 @@
     width: 1300px;
     height: 500px;
 
-    background: url(../img/header.jpg);
+    background: url(../../img/header.jpg);
 
     font: $base-font;
 }
@@ -52,4 +52,8 @@
 
 .header__subtitle {
     font-size: 17px;
+}
+
+.header__logo {
+    justify-self: center;
 }
