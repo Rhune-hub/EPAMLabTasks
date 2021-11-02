@@ -11,7 +11,7 @@ export default function UserDetails() {
     
      return (
         <div className="user-details__container" data-user-id={user.id}>
-             <div className="user-details__info">
+            <div className="user-details__info">
                 <Avatar src={user.avatar}/>
                 <UserInfo user={user.info}/>
             </div>
