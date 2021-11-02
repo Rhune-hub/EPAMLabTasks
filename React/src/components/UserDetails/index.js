@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useCallback} from 'react'
 import Avatar from '../Avatar'
 import UserInfo from '../UserInfo'
 import Content from '../Content'
@@ -9,15 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function UserDetails() {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.users.user);
     
-    const setUser = () => {
+    const setUser = useCallback( () => {
         dispatch({type:'SET_USER', payload: userObject})
-    }
+    }, [dispatch]);
 
-    useEffect(() => {
-        setUser();
-    }, [])
+    useEffect(() => { setUser(); }, [setUser]);
     
     return (
         user
