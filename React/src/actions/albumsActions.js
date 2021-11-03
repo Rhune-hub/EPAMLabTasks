@@ -1,10 +1,10 @@
 import {albumsActionTypes} from "../actionTypes/albumsActionTypes"
 const types = albumsActionTypes;
 
-export function setAlbums(albums) {
+export function setAlbums(userId, albums) {
     return {
         type: types.SET_ALBUMS,
-        payload: albums,
+        payload: {userId, albums},
     }
 }
 

@@ -7,7 +7,6 @@ export default function ShowMoreButton({albumId, start, count }) {
     const dispatch = useDispatch();
 
     const addPhotos = useCallback((photos) => {
-        console.log(photos);
         dispatch({type: 'ADD_PHOTOS', payload: photos});
     }, [dispatch])
 

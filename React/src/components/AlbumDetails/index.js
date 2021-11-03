@@ -55,17 +55,16 @@ export default function AlbumDetails({album, onBack}) {
             addPhoto({...photo, id: id+localPhotos.length, albumId: album.id});
           })
           .catch((e) => console.log(e.message));
-    }, [album, addPhoto, localPhotos])
+    }, [album, localPhotos, addPhoto])
 
     useEffect(() => {   
-        if(!photos) return;
         fetch(`https://jsonplaceholder.typicode.com/albums/${album.id}/photos?_limit=10`)
         .then(res => res.json())
         .then(data => setPhotos(album.id, data))
         .catch((e) => console.log(e.message));
         
-    }, [setPhotos, photos, album]);
-
+    }, [setPhotos, localPhotos, album]);
+    console.log(album,localPhotos)
     if (!album) return null;
     return (
         <div className="album-detail">
@@ -80,7 +79,7 @@ export default function AlbumDetails({album, onBack}) {
                 { photos.length < PHOTO_LIMIT ? <ShowMoreButton albumId={album.id} start={photos.length} count={10}/> : <></>}
             </>
             : <></>}
-                <div className="album-detail__add-button-container"><button className="album-detail__add-button" onClick={() => addNewPhoto()}>Add Photo</button></div>
+                <div className="album-detail__add-button-container"><button className="album-detail__add-button" onClick={addNewPhoto}>Add Photo</button></div>
         </div>
     )
 }

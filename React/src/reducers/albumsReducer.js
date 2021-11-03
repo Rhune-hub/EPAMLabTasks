@@ -9,14 +9,14 @@ const defaultState = {
 export default function albumsReducers (state = defaultState, action) {
     switch (action.type) {
         case type.ADD_ALBUM:
-            return {...state, localAlbums: [...state.albums.localAlbums, action.payload]};     
+            return {...state, localAlbums: [...state.localAlbums, action.payload]};     
         case type.SET_ACTIVE_ALBUM:
-            return {...state, activeAlbum: state.albums.albums.find(album => album.id === action.payload)};
+            return {...state, activeAlbum: state.albums.find(album => album.id === action.payload)};
         case type.UNSET_ACTIVE_ALBUM:
             return {...state, activeAlbum: null};
         case type.SET_ALBUMS:
             const {albums, userId} = action.payload;
-            return {...state, albums: [...albums, ...state.albums.localAlbums.filter(album => album.userId === userId)]};        
+            return {...state, albums: [...albums, ...state.localAlbums.filter(album => album.userId === userId)]};        
         default:
             return state;
     }
