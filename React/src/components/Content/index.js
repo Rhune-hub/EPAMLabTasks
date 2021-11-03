@@ -1,42 +1,73 @@
-import React from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import ListItem from '../ListItem'
 import './style.css'
 
-export default class Content extends React.Component {
-    constructor() {
-        super();
-        this.state = { albums: [] };
-    }
+export default function Content({userId}) {
+    const [albums, setAlbums] = useState([]);
+    const [photos, setPhotos] = useState([]);
+    const [activeAlbum, setActiveAlbum] = useState(null);
+    const [activePhoto, setActivePhoto] = useState(null);
 
+    const albumClickHandler = useCallback((e) => {        
+        const currentId = Number(e.currentTarget.dataset.id);
 
+        fetch(`https://jsonplaceholder.typicode.com/albums/${currentId}/photos`)
+        .then(res => res.json())
+        .then(data => setPhotos(data))
+        .catch((e) => console.log(e.message));
+        
+        setActiveAlbum(albums.find(album => album.id === currentId));
+    });
 
-    async componentDidMount() {
-        try {
-            const data = await (await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${this.props.userId}`)).json();
-            console.log(data)
-            this.setState({ albums: data });
+    const photoClickHandler = useCallback((e) => {
+        const currentId = Number(e.currentTarget.dataset.id);
+        setActivePhoto(photos.find(photo => photo.id === currentId));
+    });
 
-        } catch(e) {
-            console.log(e.message)
-        }
-    }
+    const backButtonClickHandler = useCallback((e) => {
+        setActiveAlbum(null);
+        setPhotos([]);
+    });
 
-    render() {
-        return (
-            <div class="content__container">
-                { this.state.albums.length === 0 
-                ? <h3>Something went wrong during getting content.</h3> 
-                : ( <>
-                    <div className="content__title">
-                        <h2>Albums</h2>
-                    </div>
-                    <div className="content__list-container">
-                        <ul className="content__list">
-                            {this.state.albums.map(album => <ListItem title={album.title} key={album.id}/>)}
-                        </ul>
-                    </div> 
-                    </>
-                 ) }
-        </div>)
-    }
+    const bigPhotoClickHandler = useCallback((e) => {
+        setActivePhoto(null);
+    });
+    
+    useEffect(() => {
+        fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`)
+            .then(res => res.json())
+            .then(data => setAlbums(data))
+            .catch((e) => console.log(e.message));
+    },[]);
+
+    return (
+        <div className="content__container">
+            { albums.length === 0 
+            ?   <div className="content__title">
+                    <h3>Something went wrong during getting content.</h3>
+                </div>
+            : ( <>
+                <div className="content__title">
+                    <h2>Albums</h2>
+                </div>
+                <div className="content__list-container">
+                    <ul className="content__list">
+                        { activeAlbum 
+                            ? activePhoto 
+                                ? ( <div className="content__big-photo-container" onClick={bigPhotoClickHandler}>
+                                        <h2 className="big-photo__title">Photos from album "{activePhoto.title}"</h2>
+                                        <img className="big-photo__image" src={activePhoto.url} alt={`For ${activePhoto.title}`} onClick={bigPhotoClickHandler}/>
+                                    </div>)
+                                :(<>
+                                    <ListItem title="Back" onClick={backButtonClickHandler} key={-1213}/>
+                                    {photos.map(photo => <ListItem title={photo.title} imgSrc={photo.thumbnailUrl} id={photo.id} key={photo.id} onClick={photoClickHandler}/>)}
+                                    <ListItem title="Back" onClick={backButtonClickHandler} key={-2131}/>
+                                </>)
+                            :  albums.map(album => <ListItem title={album.title} id={album.id} key={album.id} onClick={albumClickHandler}/>) 
+                        }
+                    </ul>
+                </div> 
+                </>
+                ) }
+    </div>)
 }

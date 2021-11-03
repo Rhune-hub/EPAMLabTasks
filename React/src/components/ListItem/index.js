@@ -1,14 +1,13 @@
 import React from 'react'
 import './style.css';
 
-export default class ListItem extends React.Component {
-    render() {
-        return (
-            <li className="list__item">
-                <div className="list-item__container">
-                    <h3 className="list-item__title">{this.props.title}</h3>  
-                </div>
-            </li>
-        )
-    }
+export default function ListItem({title, id, imgSrc, onClick}) {
+    return (
+        <li className="list__item" data-id={id} onClick={onClick}>
+            <div className="list-item__container">
+                {imgSrc ? <img src={imgSrc} alt={`for ${title}`}/> : <></>}
+                <h3 className="list-item__title">{title}</h3>  
+            </div>
+        </li>
+    )
 }
