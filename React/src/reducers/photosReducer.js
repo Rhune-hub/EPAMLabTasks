@@ -17,7 +17,6 @@ const photosReducer = (state = defaultState, action) => {
         case type.UNSET_ACTIVE_PHOTO:
             return {...state, activePhoto: null};
         case type.SET_PHOTOS:
-            console.log(action,state.localPhotos);
             const {photos, albumId} = action.payload;
             return {...state, photos: [...photos, ...state.localPhotos.filter(photo => photo.albumId === albumId)]};
         case type.UNSET_PHOTOS:

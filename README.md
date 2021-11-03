@@ -143,3 +143,19 @@ y[i] = x[i-1] + x[i+1]​
 2) Check working status of app for different browsers​
 
 3) Push code to repo “Rome”
+
+# EPAMLabTask 14
+
+1) Split your code from previous HM to some modules (at least 2)​
+
+2) Implement dynamic import for module​
+
+3) Push code to repo “multi_module”
+
+# EPAMLabTask 15
+
+1) Develop page with stored state that can “restore” user name and predefined theme (dark or light)​
+
+2) Apply this module to existing app (from previous task)​
+
+3) Push code to repo “day & night”

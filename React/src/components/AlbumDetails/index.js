@@ -64,7 +64,7 @@ export default function AlbumDetails({album, onBack}) {
         .catch((e) => console.log(e.message));
         
     }, [setPhotos, localPhotos, album]);
-    console.log(album,localPhotos)
+    
     if (!album) return null;
     return (
         <div className="album-detail">
