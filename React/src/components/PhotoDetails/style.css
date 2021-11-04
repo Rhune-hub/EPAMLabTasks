@@ -6,3 +6,7 @@
     text-align: center;
     margin: 10px;
   }
+.big-photo__image {
+    max-width: 600px;
+    max-height: 600px;
+}

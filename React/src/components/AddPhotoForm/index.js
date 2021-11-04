@@ -6,6 +6,7 @@ export default function AddPhotoForm({isOpen, onClose}) {
 
     const dispatch = useDispatch();
     const activeAlbum = useSelector(store => store.albums.activeAlbum);
+    const localPhotos = useSelector(store => store.photos.localPhotos);
 
     const [isError, setError] = useState(false);
 
@@ -33,7 +34,7 @@ export default function AddPhotoForm({isOpen, onClose}) {
           })
           .then(res => res.json())
           .then(({id}) => {
-            addPhoto(photo);
+            addPhoto({...photo, id: id+localPhotos.length});
           })
           .catch((e) => console.log(e.message));
             onClose();
