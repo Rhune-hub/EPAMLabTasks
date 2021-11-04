@@ -1,0 +1,22 @@
+.album-detail__title {
+    margin: 2rem;
+    text-align: center;
+}
+
+.album-detail__add-button, .album-detail__back-button {
+    margin: 20px;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    background-color: burlywood;
+    border-radius: 15px;
+    border: 2px solid black;
+  }
+
+  .album-detail__add-button:hover, .album-detail__back-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .album-detail__empty {
+    text-align: center;
+  }

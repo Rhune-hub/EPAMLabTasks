@@ -1,0 +1,23 @@
+.list__item {
+  width: 32%;
+  flex-grow: 1;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+}
+
+.list-item__container {
+  margin: 10px;
+  text-align: center;
+}
+
+.list-item__title {
+  text-align: center;
+}
+
+.list-item__image {
+  width: 150px;
+  height: 150px;
+}
