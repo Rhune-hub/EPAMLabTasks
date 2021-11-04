@@ -2,6 +2,7 @@ import React, {useEffect, useCallback} from 'react'
 import Avatar from '../Avatar'
 import UserInfo from '../UserInfo'
 import Content from '../Content'
+import ErrorBoundary from '../ErrorBoundary'
 import userObject from '../../data/user.json'
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +26,9 @@ export default function UserDetails() {
                     <UserInfo user={user.info}/>
                 </div>
                 <div className="user-details__content">
+                <ErrorBoundary>
                     <Content userId={user.id}/>
+                </ErrorBoundary>
                 </div>
         </div>)
         : <></>

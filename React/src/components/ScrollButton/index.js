@@ -25,7 +25,6 @@ export default function ScrollButton({direction}) {
             window.scrollTo(window.scrollX, scrollHeight);
         }
         scrollHandler = (e) => {
-            console.log(window.scrollY)
             if (window.scrollY > document.documentElement.scrollHeight - document.documentElement.clientHeight - 200)
                 setShow(false)
             else
