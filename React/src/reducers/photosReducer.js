@@ -8,6 +8,9 @@ const defaultState = {
 
 const photosReducer = (state = defaultState, action) => {
     switch (action.type) {
+        case type.LOAD_PHOTOS_FROM_STORAGE:
+            const sessionLocalPhotos =  JSON.parse(sessionStorage.getItem('localPhotos')) || [];
+            return {...state, localPhotos: [...state.localPhotos, ...sessionLocalPhotos]}
         case type.ADD_PHOTO:
             return {...state, localPhotos: [...state.localPhotos, action.payload]};
         case type.ADD_PHOTOS:

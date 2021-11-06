@@ -6,28 +6,26 @@ import ErrorBoundary from '../ErrorBoundary'
 import userObject from '../../data/user.json'
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router'
+import AlbumDetails from '../AlbumDetails'
 
 
 export default function UserDetails() {
-    const dispatch = useDispatch();
+    
     const user = useSelector(state => state.users.user);
     
-    const setUser = useCallback( () => {
-        dispatch({type:'SET_USER', payload: userObject})
-    }, [dispatch]);
+    const {albumId} = useParams();
 
-    useEffect(() => { setUser(); }, [setUser]);
-    
-    return (
+    return (    
         user
         ? (<div className="user-details__container" data-user-id={user.id}>
                 <div className="user-details__info">
-                    <Avatar src={user.avatar}/>
-                    <UserInfo user={user.info}/>
+                    <Avatar src="/img/avatar.png"/>
+                    <UserInfo user={user}/>
                 </div>
                 <div className="user-details__content">
                 <ErrorBoundary>
-                    <Content userId={user.id}/>
+                    {albumId ? <AlbumDetails/> : <Content userId={user.id}/>}
                 </ErrorBoundary>
                 </div>
         </div>)
