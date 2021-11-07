@@ -16,12 +16,12 @@ const photosReducer = (state = defaultState, action) => {
         case type.ADD_PHOTOS:
             return {...state, photos: [...state.photos, ...action.payload]};
         case type.SET_ACTIVE_PHOTO:
-            return {...state, activePhoto: state.photos.find(photo => photo.id === action.payload)};
+            return {...state, activePhoto: state.photos.find(photo => photo.id === Number(action.payload))};
         case type.UNSET_ACTIVE_PHOTO:
             return {...state, activePhoto: null};
         case type.SET_PHOTOS:
             const {photos, albumId} = action.payload;
-            return {...state, photos: [...photos, ...state.localPhotos.filter(photo => photo.albumId === albumId)]};
+            return {...state, photos: [...photos, ...state.localPhotos.filter(photo => photo.albumId === Number(albumId))]};
         case type.UNSET_PHOTOS:
             return {...state, photos: []};
         default:

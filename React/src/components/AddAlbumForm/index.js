@@ -28,6 +28,7 @@ export default function AddAlbumForm({isOpen, onClose}) {
               .then(res => res.json())
               .then(({id}) => {
                 addAlbum({...album, id: id+localAlbums.length});
+                console.log(localAlbums)
               })
               .catch((e) => console.log(e.message));
 

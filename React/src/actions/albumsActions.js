@@ -41,3 +41,9 @@ export function setActiveAlbum(album) {
         payload: album,
     }
 }
+
+export function loadStorageAlbums() {
+    return {
+        type: types.LOAD_ALBUMS_FROM_STORAGE,
+    }
+}

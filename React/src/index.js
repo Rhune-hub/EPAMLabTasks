@@ -5,7 +5,7 @@ import App from './App';
 import {Provider} from 'react-redux';
 import store from './store';
 import {BrowserRouter as Router} from 'react-router-dom';
-import MyRouter from './components/router/Router';
+import MyRouter from './components/router/MyRouter';
 
 ReactDOM.render(
     <Provider store={store}>

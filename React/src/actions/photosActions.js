@@ -34,3 +34,9 @@ export function setActivePhoto(photo) {
         payload: photo,
     }
 }
+
+export function loadStoragePhotos() {
+    return {
+        type: types.LOAD_PHOTOS_FROM_STORAGE,
+    }
+}
