@@ -6,7 +6,7 @@ import AddPhotoForm from '../AddPhotoForm';
 import {PHOTO_LIMIT} from '../../data/photoLimit.json';
 import { useParams, Link, Outlet } from 'react-router-dom'
 import './style.css'    
-import { addPhotos, setPhotos } from 'actions/photosActions';
+import { addPhotos, setPhotos } from '../../actions/photosActions';
 
 export default function AlbumDetails() {
     const dispatch = useDispatch();

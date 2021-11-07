@@ -5,13 +5,13 @@ import LoginForm from '../LoginForm';
 import UserDetails from '../UserDetails';
 import PhotoDetails from '../PhotoDetails';
 import Logout from '../Logout';
-import Albums from 'components/Albums';
-import Home from 'components/Home';
-import Layout from 'components/Layout';
-import NotFound from 'components/NotFound';
+import Albums from '../Albums';
+import Home from '../Home';
+import Layout from '../Layout';
+import NotFound from '../NotFound';
 import Auth from '../Auth';
 
-const MyRouter = () => {
+const MyRouter = () => (
     <Routes>
       <Route path="/" element={<Layout/>}>
         <Route index element={<Home/>} />
@@ -32,6 +32,6 @@ const MyRouter = () => {
       </Route>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
-}
+);
 
 export default MyRouter;

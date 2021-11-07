@@ -11,7 +11,7 @@ ReactDOM.render(
     <Provider store={store}>
     <Router>
       <App>
-        {/* <MyRouter/> */} 
+          <MyRouter/>
         </App> 
     </Router>
     </Provider>

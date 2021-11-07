@@ -31,7 +31,7 @@ export default function LoginForm() {
               .catch((e) => console.log(e.message));
         } else 
             setError('Incorrect input!');
-    }, [setUser, setError, navigate]);
+    }, [setError, navigate, dispatch]);
 
     return (
         <div className="login__container">
