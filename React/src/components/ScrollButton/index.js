@@ -25,10 +25,10 @@ export default function ScrollButton({direction}) {
             window.scrollTo(window.scrollX, scrollHeight);
         }
         scrollHandler = (e) => {
-            if (window.scrollY > document.documentElement.scrollHeight - document.documentElement.clientHeight - 200)
-                setShow(false)
+            if (window.scrollY < document.documentElement.scrollHeight - document.documentElement.clientHeight -100 )
+            setShow(true);
             else
-                setShow(true);
+            setShow(false)
         }
     }
 

@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react'
+import { addAlbum } from '../../actions/albumsActions';
 import AddForm from '../AddForm';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,10 +10,6 @@ export default function AddAlbumForm({isOpen, onClose}) {
     const localAlbums = useSelector(store => store.albums.localAlbums);
 
     const [isError, setError] = useState(false);
-
-    const addAlbum = useCallback((album) => {
-        dispatch({type:'ADD_ALBUM', payload: album});
-    }, [dispatch])
 
     const addAlbumHandler = useCallback((e) => {
         e.preventDefault();
@@ -27,7 +24,7 @@ export default function AddAlbumForm({isOpen, onClose}) {
               })
               .then(res => res.json())
               .then(({id}) => {
-                addAlbum({...album, id: id+localAlbums.length});
+                dispatch(addAlbum({...album, id: id+localAlbums.length}));
                 console.log(localAlbums)
               })
               .catch((e) => console.log(e.message));
@@ -35,7 +32,7 @@ export default function AddAlbumForm({isOpen, onClose}) {
             onClose();
         } else 
             setError(true);
-    }, [addAlbum, localAlbums, onClose, user]);
+    }, [dispatch, localAlbums, onClose, user]);
 
     return (
             <AddForm title="Add Album" onAdd={addAlbumHandler} isOpen={isOpen} isError={isError} onClose={onClose}>

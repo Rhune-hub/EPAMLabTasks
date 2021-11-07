@@ -11,7 +11,20 @@
     border-radius: 15px;
     border: 2px solid black;
   }
-
+.back-button {
+  margin: 20px;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    background-color:cornflowerblue;
+    border-radius: 15px;
+    border: 2px solid black;
+    text-decoration: none;
+}
+  .flex-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
   .album-detail__add-button:hover, .album-detail__back-button:hover {
     opacity: 0.7;
     cursor: pointer;

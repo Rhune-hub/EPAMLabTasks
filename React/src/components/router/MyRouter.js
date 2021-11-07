@@ -21,7 +21,6 @@ const MyRouter = () => (
           </Route>
         </Route>
         <Route path="user/:userId" element={<Auth redirect="/login"><UserDetails/></Auth>}>
-          <Route index element={<Albums/>}/>
           <Route path="albums/:albumId" element={<AlbumDetails/>}>
             <Route path="photos/:photoId" element={<PhotoDetails/>}/>
           </Route>
