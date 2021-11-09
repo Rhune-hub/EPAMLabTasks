@@ -1,16 +1,18 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import ListItem from '../ListItem';
 import ShowMoreButton from '../ShowMoreButton';
 import { useDispatch, useSelector } from 'react-redux';
-import hardCodePhotos from '../../data/hardCodePhotos.json';
+import AddPhotoForm from '../AddPhotoForm';
 import {PHOTO_LIMIT} from '../../data/photoLimit.json';
 import './style.css'
 
-export default function AlbumDetails({album, onBack}) {
+export default function AlbumDetails({album}) {
     const dispatch = useDispatch();
 
     const photos = useSelector(state => state.photos.photos);
     const localPhotos = useSelector(state => state.photos.localPhotos);
+
+    const [open, setOpen] = useState(false);
 
     const setPhotos = useCallback((albumId, photos) => {
         dispatch({type:'SET_PHOTOS', payload: {albumId, photos}});
@@ -38,25 +40,6 @@ export default function AlbumDetails({album, onBack}) {
         setActivePhoto(currentId);
     }, [setActivePhoto]);
 
-    const addPhoto = useCallback((photo) => {
-        dispatch({type:'ADD_PHOTO', payload: photo});
-    }, [dispatch]);
-
-    const addNewPhoto = useCallback(() => {
-        const photo = hardCodePhotos[hardCodePhotos.length * Math.random() | 0];
-
-        fetch(`https://jsonplaceholder.typicode.com/albums/${album.id}/photos`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
-            body: JSON.stringify(photo)
-          })
-          .then(res => res.json())
-          .then(({id}) => {
-            addPhoto({...photo, id: id+localPhotos.length, albumId: album.id});
-          })
-          .catch((e) => console.log(e.message));
-    }, [album, localPhotos, addPhoto])
-
     useEffect(() => {   
         fetch(`https://jsonplaceholder.typicode.com/albums/${album.id}/photos?_limit=10`)
         .then(res => res.json())
@@ -68,7 +51,7 @@ export default function AlbumDetails({album, onBack}) {
     if (!album) return null;
     return (
         <div className="album-detail">
-            <div className="album-detail__title"><span>{album.title}</span></div>
+            <div className="album-detail__title"><h2>{album.title}</h2></div>
             {photos.length
             ? <>
             <ul className="content__list">
@@ -78,8 +61,9 @@ export default function AlbumDetails({album, onBack}) {
             </ul>
                 { photos.length < PHOTO_LIMIT ? <ShowMoreButton albumId={album.id} start={photos.length} count={10}/> : <></>}
             </>
-            : <></>}
-                <div className="album-detail__add-button-container"><button className="album-detail__add-button" onClick={addNewPhoto}>Add Photo</button></div>
+            : <><div className="album-detail__empty"><h3>Album is empty</h3></div><div className="album-detail__back-button-container"><button className="album-detail__back-button" onClick={albumDetailBackHandler}>Back</button></div></>}
+                <div className="album-detail__add-button-container"><button className="album-detail__add-button" onClick={()=>setOpen(true)}>Add Photo</button></div>
+                <AddPhotoForm isOpen={open} onClose={()=>setOpen(false)}/>
         </div>
     )
 }

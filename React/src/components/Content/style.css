@@ -22,6 +22,12 @@
     padding: 10px;
   }
 
+  .content__big-photo-container {
+    text-align: center;
+    margin: 10px;
+
+  }
+
   .content__add-element-button {
     margin: 20px;
     font-size: 1.5rem;
