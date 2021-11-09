@@ -1,8 +1,15 @@
+.list__item {
+  width: 32%;
+  flex-grow: 1;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+}
+
 .list-item__container {
-  margin: 0 1rem;
-  padding: 0.5rem 1rem;
-  
-  border-top: 3px solid black;
+  margin: 10px;
   text-align: center;
 }
 
