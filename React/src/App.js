@@ -1,13 +1,14 @@
+import React from 'react';
 import './styles/App.css';
-import UserDetails from './components/UserDetails';
-import ScrollButton from './components/ScrollButton';
+import ErrorBoundary from './components/ErrorBoundary'
+import Content from './components/Content';
 
-function App() {
+function App({children}) {
   return (
     <div className="app">
-      <ScrollButton direction="bottom"/>
-      <UserDetails/>
-      <ScrollButton direction="top"/>
+      <ErrorBoundary>
+        <Content>{children}</Content>
+      </ErrorBoundary>
     </div>
   );
 }

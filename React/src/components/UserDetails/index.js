@@ -1,36 +1,26 @@
-import React, {useEffect, useCallback} from 'react'
+import React from 'react'
 import Avatar from '../Avatar'
 import UserInfo from '../UserInfo'
-import Content from '../Content'
-import ErrorBoundary from '../ErrorBoundary'
-import userObject from '../../data/user.json'
+import Albums from '../Albums';
 import './style.css';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router'
 
 export default function UserDetails() {
-    const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
-    
-    const setUser = useCallback( () => {
-        dispatch({type:'SET_USER', payload: userObject})
-    }, [dispatch]);
+    const {userId} = useParams();
+    const navigate = useNavigate();
 
-    useEffect(() => { setUser(); }, [setUser]);
-    
+    if(user && Number(userId) !== user.id) navigate(`/user/${user.id}`);
+
+    if (user === undefined) return null;
     return (
-        user
-        ? (<div className="user-details__container" data-user-id={user.id}>
-                <div className="user-details__info">
-                    <Avatar src={user.avatar}/>
-                    <UserInfo user={user.info}/>
-                </div>
-                <div className="user-details__content">
-                <ErrorBoundary>
-                    <Content userId={user.id}/>
-                </ErrorBoundary>
-                </div>
-        </div>)
-        : <></>
+        <div  className="user-details__container">
+            <div className="user-details__info">
+                <Avatar src="/img/avatar.png"/>
+                <UserInfo user={user}/>
+            </div>
+                <Albums/>
+        </div>
     )
 }

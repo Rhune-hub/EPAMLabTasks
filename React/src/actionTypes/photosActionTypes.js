@@ -5,6 +5,7 @@ export const photosActionTypes = {
     UNSET_PHOTOS: "UNSET_PHOTOS",
     SET_ACTIVE_PHOTO: "SET_ACTIVE_PHOTO",
     UNSET_ACTIVE_PHOTO: "UNSET_ACTIVE_PHOTO",
+    LOAD_PHOTOS_FROM_STORAGE: "LOAD_PHOTOS_FROM_STORAGE",
 }
 
 export default photosActionTypes;
